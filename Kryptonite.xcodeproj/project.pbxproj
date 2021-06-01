@@ -14,7 +14,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		A858650826625AB10038DC5B /* eGFXEnabler.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = eGFXEnabler.kext; sourceTree = BUILT_PRODUCTS_DIR; };
+		A858650826625AB10038DC5B /* Kryptonite.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Kryptonite.kext; sourceTree = BUILT_PRODUCTS_DIR; };
 		A858650D26625AB10038DC5B /* kern_start.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = kern_start.cpp; sourceTree = "<group>"; };
 		A858650F26625AB10038DC5B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A8586544266264150038DC5B /* kern_patchset.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = kern_patchset.cpp; sourceTree = "<group>"; };
@@ -73,7 +73,7 @@
 			isa = PBXGroup;
 			children = (
 				A858654026625D900038DC5B /* SDK */,
-				A858650A26625AB10038DC5B /* eGFXEnabler */,
+				A858650A26625AB10038DC5B /* Kryptonite */,
 				A858650926625AB10038DC5B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -81,18 +81,18 @@
 		A858650926625AB10038DC5B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A858650826625AB10038DC5B /* eGFXEnabler.kext */,
+				A858650826625AB10038DC5B /* Kryptonite.kext */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		A858650A26625AB10038DC5B /* eGFXEnabler */ = {
+		A858650A26625AB10038DC5B /* Kryptonite */ = {
 			isa = PBXGroup;
 			children = (
 				A858654226625DBD0038DC5B /* Sources */,
 				A858654326625DC60038DC5B /* Supporting Files */,
 			);
-			path = eGFXEnabler;
+			path = Kryptonite;
 			sourceTree = "<group>";
 		};
 		A858654026625D900038DC5B /* SDK */ = {
@@ -205,9 +205,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		A858650726625AB10038DC5B /* eGFXEnabler */ = {
+		A858650726625AB10038DC5B /* Kryptonite */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A858651226625AB10038DC5B /* Build configuration list for PBXNativeTarget "eGFXEnabler" */;
+			buildConfigurationList = A858651226625AB10038DC5B /* Build configuration list for PBXNativeTarget "Kryptonite" */;
 			buildPhases = (
 				A858650326625AB10038DC5B /* Headers */,
 				A858650426625AB10038DC5B /* Sources */,
@@ -218,9 +218,9 @@
 			);
 			dependencies = (
 			);
-			name = eGFXEnabler;
+			name = Kryptonite;
 			productName = eGFXEnabler;
-			productReference = A858650826625AB10038DC5B /* eGFXEnabler.kext */;
+			productReference = A858650826625AB10038DC5B /* Kryptonite.kext */;
 			productType = "com.apple.product-type.kernel-extension";
 		};
 /* End PBXNativeTarget section */
@@ -236,7 +236,7 @@
 					};
 				};
 			};
-			buildConfigurationList = A858650226625AB10038DC5B /* Build configuration list for PBXProject "eGFXEnabler" */;
+			buildConfigurationList = A858650226625AB10038DC5B /* Build configuration list for PBXProject "Kryptonite" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -249,7 +249,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A858650726625AB10038DC5B /* eGFXEnabler */,
+				A858650726625AB10038DC5B /* Kryptonite */,
 			);
 		};
 /* End PBXProject section */
@@ -282,6 +282,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = x86_64;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -341,6 +342,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = x86_64;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -400,7 +402,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1.0.0;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = YF7XP6ZYSQ;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"MODULE_VERSION=$(MODULE_VERSION)",
 					"PRODUCT_NAME=$(PRODUCT_NAME)",
@@ -411,16 +413,16 @@
 					"${PROJECT_DIR}/eGFXEnabler",
 					"${PROJECT_DIR}",
 				);
-				INFOPLIST_FILE = eGFXEnabler/Info.plist;
+				INFOPLIST_FILE = Kryptonite/Info.plist;
 				KERNEL_EXTENSION_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/MacKernelSDK/Headers";
 				KERNEL_FRAMEWORK_HEADERS = "$(PROJECT_DIR)/MacKernelSDK/Headers";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/MacKernelSDK/Library/x86_64",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MARKETING_VERSION = 1.0.0;
-				MODULE_NAME = io.egpu.eGFXEnabler;
+				MODULE_NAME = io.egpu.Kryptonite;
 				MODULE_START = "$(PRODUCT_NAME)_kern_start";
 				MODULE_STOP = "$(PRODUCT_NAME)_kern_stop";
 				MODULE_VERSION = 1.0.0;
@@ -436,7 +438,7 @@
 					"-fno-builtin",
 					"-fno-asynchronous-unwind-tables",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = io.egpu.eGFXEnabler;
+				PRODUCT_BUNDLE_IDENTIFIER = io.egpu.Kryptonite;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
@@ -454,7 +456,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1.0.0;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = YF7XP6ZYSQ;
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"MODULE_VERSION=$(MODULE_VERSION)",
@@ -465,16 +467,16 @@
 					"${PROJECT_DIR}/eGFXEnabler",
 					"${PROJECT_DIR}",
 				);
-				INFOPLIST_FILE = eGFXEnabler/Info.plist;
+				INFOPLIST_FILE = Kryptonite/Info.plist;
 				KERNEL_EXTENSION_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/MacKernelSDK/Headers";
 				KERNEL_FRAMEWORK_HEADERS = "$(PROJECT_DIR)/MacKernelSDK/Headers";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/MacKernelSDK/Library/x86_64",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MARKETING_VERSION = 1.0.0;
-				MODULE_NAME = io.egpu.eGFXEnabler;
+				MODULE_NAME = io.egpu.Kryptonite;
 				MODULE_START = "$(PRODUCT_NAME)_kern_start";
 				MODULE_STOP = "$(PRODUCT_NAME)_kern_stop";
 				MODULE_VERSION = 1.0.0;
@@ -491,7 +493,7 @@
 					"-fno-builtin",
 					"-fno-asynchronous-unwind-tables",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = io.egpu.eGFXEnabler;
+				PRODUCT_BUNDLE_IDENTIFIER = io.egpu.Kryptonite;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
@@ -502,7 +504,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A858650226625AB10038DC5B /* Build configuration list for PBXProject "eGFXEnabler" */ = {
+		A858650226625AB10038DC5B /* Build configuration list for PBXProject "Kryptonite" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A858651026625AB10038DC5B /* Debug */,
@@ -511,7 +513,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A858651226625AB10038DC5B /* Build configuration list for PBXNativeTarget "eGFXEnabler" */ = {
+		A858651226625AB10038DC5B /* Build configuration list for PBXNativeTarget "Kryptonite" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A858651326625AB10038DC5B /* Debug */,

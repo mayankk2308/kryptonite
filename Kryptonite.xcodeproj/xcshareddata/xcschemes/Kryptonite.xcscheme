@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A858650726625AB10038DC5B"
-               BuildableName = "eGFXEnabler.kext"
-               BlueprintName = "eGFXEnabler"
-               ReferencedContainer = "container:eGFXEnabler.xcodeproj">
+               BuildableName = "Kryptonite.kext"
+               BlueprintName = "Kryptonite"
+               ReferencedContainer = "container:Kryptonite.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -51,9 +51,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A858650726625AB10038DC5B"
-            BuildableName = "eGFXEnabler.kext"
-            BlueprintName = "eGFXEnabler"
-            ReferencedContainer = "container:eGFXEnabler.xcodeproj">
+            BuildableName = "Kryptonite.kext"
+            BlueprintName = "Kryptonite"
+            ReferencedContainer = "container:Kryptonite.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
