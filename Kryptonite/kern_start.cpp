@@ -7,12 +7,12 @@ static PatchSet patchSet;
 
 // Boot-args to disable TB1/2 eGFX support
 static const char *bootargOff[] {
-    "-egfxdisable"
+    "-krydisable"
 };
 
 // Boot-args to enable eGFX support on beta versions of macOS
 static const char *bootargBeta[] {
-    "-egfxbeta"
+    "-krybeta"
 };
 
 PluginConfiguration ADDPR(config) {
@@ -29,6 +29,5 @@ PluginConfiguration ADDPR(config) {
     KernelVersion::BigSur,
     []() {
         patchSet.init();
-        patchSet.deinit();
     }
 };

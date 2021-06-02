@@ -107,9 +107,8 @@
 		A858654226625DBD0038DC5B /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				A858650D26625AB10038DC5B /* kern_start.cpp */,
-				A8586544266264150038DC5B /* kern_patchset.cpp */,
-				A8586545266264150038DC5B /* kern_patchset.hpp */,
+				A87973E32667E10A002E0CF0 /* Base */,
+				A87973E22667E0F9002E0CF0 /* PatchSet */,
 			);
 			name = Sources;
 			sourceTree = "<group>";
@@ -189,6 +188,23 @@
 				A86043E12662A7380074664D /* wrappers.inc */,
 			);
 			path = wrappers;
+			sourceTree = "<group>";
+		};
+		A87973E22667E0F9002E0CF0 /* PatchSet */ = {
+			isa = PBXGroup;
+			children = (
+				A8586544266264150038DC5B /* kern_patchset.cpp */,
+				A8586545266264150038DC5B /* kern_patchset.hpp */,
+			);
+			name = PatchSet;
+			sourceTree = "<group>";
+		};
+		A87973E32667E10A002E0CF0 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				A858650D26625AB10038DC5B /* kern_start.cpp */,
+			);
+			name = Base;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
