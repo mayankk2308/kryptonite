@@ -10,13 +10,15 @@ inline unsigned arraysize(const T (&v)[S]) { return S; }
 static const char* targetKexts[] = {
     "/System/Library/Extensions/AppleGraphicsControl.kext/Contents/PlugIns/AppleGPUWrangler.kext/Contents/MacOS/AppleGPUWrangler",
     "/System/Library/Extensions/IOGraphicsFamily.kext/IOGraphicsFamily",
-    "/System/Library/Extensions/AppleGraphicsControl.kext/Contents/PlugIns/AppleMuxControl.kext/Contents/MacOS/AppleMuxControl"
+    "/System/Library/Extensions/AppleGraphicsControl.kext/Contents/PlugIns/AppleMuxControl.kext/Contents/MacOS/AppleMuxControl",
+    "/System/Library/Extensions/IOThunderboltFamily.kext/Contents/MacOS/IOThunderboltFamily"
 };
 
 static KernelPatcher::KextInfo kextList[] {
     {"com.apple.AppleGPUWrangler", &targetKexts[0], arraysize(targetKexts), {true}, {}, KernelPatcher::KextInfo::Unloaded},
     {"com.apple.iokit.IOGraphicsFamily", &targetKexts[1], arraysize(targetKexts), {true}, {}, KernelPatcher::KextInfo::Unloaded},
-    {"com.apple.driver.AppleMuxControl", &targetKexts[2], arraysize(targetKexts), {true}, {}, KernelPatcher::KextInfo::Unloaded}
+    {"com.apple.driver.AppleMuxControl", &targetKexts[2], arraysize(targetKexts), {true}, {}, KernelPatcher::KextInfo::Unloaded},
+    {"com.apple.iokit.IOThunderboltFamily", &targetKexts[3], arraysize(targetKexts), {true}, {}, KernelPatcher::KextInfo::Unloaded}
 };
 
 static char gpuVendor[5];
@@ -26,7 +28,7 @@ static const char* vendorNV = "NVDA";
 static size_t kextListSize = arraysize(kextList);
 
 void PatchSet::init() {
-    if (!PE_parse_boot_argn("kryvendor", &gpuVendor, sizeof(gpuVendor))) {
+    if (!PE_parse_boot_argn("krygpu", &gpuVendor, sizeof(gpuVendor))) {
         *gpuVendor = '\0';
     }
 
@@ -104,6 +106,11 @@ void PatchSet::processKext(KernelPatcher& patcher, size_t index, mach_vm_address
             
             applyPatches(patcher, index, &patch, 1);
         }
+        
+        if (!strcmp(kextList[i].id, kextList[3].id)) {
+            KernelPatcher::RouteRequest request("__ZN24IOThunderboltSwitchType321shouldSkipEnumerationEv", hookedTBTSkipEnumeration, PatchSet::orgSkipEnumerationCallback);
+            patcher.routeMultiple(index, &request, 1, address, size);
+        }
     }
     
     patcher.clearError();
@@ -121,3 +128,9 @@ void PatchSet::applyPatches(KernelPatcher& patcher, size_t index, const KextPatc
         }
     }
 }
+
+int PatchSet::hookedTBTSkipEnumeration() {
+    SYSLOG("IOThunderboltFamily", "Hooked TBT enumeration, skipping checks...");
+    return 0;
+}
+
