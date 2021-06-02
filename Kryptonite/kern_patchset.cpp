@@ -4,19 +4,19 @@
 #include <Headers/kern_iokit.hpp>
 #include "kern_patchset.hpp"
 
-// Computes array size
 template <typename T,unsigned S>
 inline unsigned arraysize(const T (&v)[S]) { return S; }
 
-// Target kexts
 static const char* targetKexts[] = {
     "/System/Library/Extensions/AppleGraphicsControl.kext/Contents/PlugIns/AppleGPUWrangler.kext/Contents/MacOS/AppleGPUWrangler",
     "/System/Library/Extensions/IOGraphicsFamily.kext/IOGraphicsFamily",
+    "/System/Library/Extensions/AppleGraphicsControl.kext/Contents/PlugIns/AppleMuxControl.kext/Contents/MacOS/AppleMuxControl"
 };
 
 static KernelPatcher::KextInfo kextList[] {
     {"com.apple.AppleGPUWrangler", &targetKexts[0], arraysize(targetKexts), {true}, {}, KernelPatcher::KextInfo::Unloaded},
-    {"com.apple.iokit.IOGraphicsFamily", &targetKexts[1], arraysize(targetKexts), {true}, {}, KernelPatcher::KextInfo::Unloaded}
+    {"com.apple.iokit.IOGraphicsFamily", &targetKexts[1], arraysize(targetKexts), {true}, {}, KernelPatcher::KextInfo::Unloaded},
+    {"com.apple.driver.AppleMuxControl", &targetKexts[2], arraysize(targetKexts), {true}, {}, KernelPatcher::KextInfo::Unloaded}
 };
 
 static char gpuVendor[5];
@@ -86,6 +86,23 @@ void PatchSet::processKext(KernelPatcher& patcher, size_t index, mach_vm_address
                 
                 applyPatches(patcher, index, &patch, 1);
             }
+        }
+        
+        if (!strcmp(kextList[i].id, kextList[2].id)) {
+            const uint8_t find[] = {0x46, 0x41, 0x34, 0x43, 0x45, 0x32, 0x38, 0x44, 0x2d, 0x42, 0x36, 0x32, 0x46, 0x2d,
+                0x34, 0x43, 0x39, 0x39, 0x2d, 0x39, 0x43, 0x43, 0x33, 0x2d, 0x36, 0x38, 0x31,
+                0x35, 0x36, 0x38, 0x36, 0x45, 0x33, 0x30, 0x46, 0x39, 0x3a, 0x67, 0x70, 0x75,
+                0x2d, 0x70, 0x6f, 0x77, 0x65, 0x72, 0x2d, 0x70, 0x72, 0x65, 0x66, 0x73};
+            const uint8_t repl[] = {0x46, 0x41, 0x34, 0x43, 0x45, 0x32, 0x38, 0x44, 0x2d, 0x42, 0x36, 0x32, 0x46, 0x2d,
+                0x34, 0x43, 0x39, 0x39, 0x2d, 0x39, 0x43, 0x43, 0x33, 0x2d, 0x36, 0x38, 0x31,
+                0x35, 0x36, 0x38, 0x36, 0x45, 0x33, 0x30, 0x46, 0x39, 0x3a, 0x67, 0x70, 0x75,
+                0x2d, 0x70, 0x6f, 0x77, 0x65, 0x72, 0x2d, 0x70, 0x72, 0x65, 0x66, 0x71};
+            KextPatch patch {
+                {&kextList[i], find, repl, sizeof(find), 1},
+                KernelVersion::HighSierra, KernelVersion::BigSur
+            };
+            
+            applyPatches(patcher, index, &patch, 1);
         }
     }
     
