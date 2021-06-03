@@ -13,14 +13,14 @@
 class Compatibility {
 private:
     constexpr static const char* moduleName = "compat";
-    KernelVersion version;
-    KernelMinorVersion minorVersion;
     static const KernelVersion minVersion = KernelVersion::HighSierra;
     static const KernelMinorVersion minMinorVersion = 5;
+    static const KernelVersion oldVersion = KernelVersion::Catalina;
+    static const KernelMinorVersion oldMinorVersion = 1;
     
 public:
-    void init();
-    bool isUnsupported();
+    static bool isUnsupported();
+    static bool isOlderKernel();
 };
 
 #endif /* kern_compatibility_hpp */

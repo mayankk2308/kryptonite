@@ -9,6 +9,7 @@
 #include "kern_patchapplicator.hpp"
 #include "kern_hooks.hpp"
 #include "kern_patches.hpp"
+#include "kern_compatibility.hpp"
 
 // For accessing NVRAM arguments
 static NVRAMArgs args;
@@ -38,7 +39,7 @@ void PatchSet::processKext(KernelPatcher& patcher, size_t index, mach_vm_address
         SYSLOG(moduleName, "Found %s...", kextList[i].id);
         
         if (!strcmp(kextList[i].id, kextList[0].id)) {
-            if (args.isAMD()) {
+            if (args.isAMD() & !Compatibility::isOlderKernel()) {
                 const uint8_t find[] = {0xf8, 0x03, 0x0f, 0x82, 0x78, 0xff, 0xff, 0xff, 0x49, 0x8b, 0x06, 0xc6, 0x80, 0x78, 0x01, 0x00};
                 const uint8_t repl[] = {0xf8, 0x00, 0x0f, 0x82, 0x78, 0xff, 0xff, 0xff, 0x49, 0x8b, 0x06, 0xc6, 0x80, 0x78, 0x01, 0x00};
                 KernelPatcher::LookupPatch patch = {&kextList[i], find, repl, sizeof(find), 1};

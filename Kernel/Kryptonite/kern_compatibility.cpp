@@ -7,17 +7,20 @@
 
 #include "kern_compatibility.hpp"
 
-void Compatibility::init() {
-    version = getKernelVersion();
-    minorVersion = getKernelMinorVersion();
-    
-    SYSLOG(moduleName, "Kernel: %d.%d", version, minorVersion);
-}
-
 bool Compatibility::isUnsupported() {
-    bool c = (version < minVersion) | (version == minVersion & minorVersion < minMinorVersion);
+    SYSLOG(moduleName, "Kernel: %d.%d", version_major, version_minor);
+    
+    bool c = (version_major < minVersion) | (version_major == minVersion & version_minor < minMinorVersion);
     
     SYSLOG(moduleName, "System supported: %d", !c);
+    
+    return c;
+}
+
+bool Compatibility::isOlderKernel() {
+    bool c = (version_major < oldVersion) | (version_major == oldVersion & version_minor < oldMinorVersion);
+    
+    SYSLOG(moduleName, "Is older kernel: %d", c);
     
     return c;
 }

@@ -4,7 +4,6 @@
 #include "kern_patchset.hpp"
 #include "kern_compatibility.hpp"
 
-static Compatibility comp;
 static PatchSet patchSet;
 
 static const char *bootargOff[] {
@@ -20,9 +19,7 @@ static const char *bootargBeta[] {
 };
 
 void start() {
-    comp.init();
-    
-    if (comp.isUnsupported()) {
+    if (Compatibility::isUnsupported()) {
         SYSLOG("startup", "System is not supported.");
         return;
     }
