@@ -25,8 +25,8 @@ void NVRAMArgs::getTBTVersion() {
         return;
     }
     
-    if (tbtVersion < 0 | tbtVersion > 4) {
-        SYSLOG(moduleName, "Invalid thunderbolt version provided.");
+    if (tbtVersion < 0 | tbtVersion > 2) {
+        SYSLOG(moduleName, "Invalid or unsupported thunderbolt version provided.");
         return;
     }
     
