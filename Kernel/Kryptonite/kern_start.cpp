@@ -2,18 +2,33 @@
 #include <Headers/kern_api.hpp>
 
 #include "kern_patchset.hpp"
+#include "kern_compatibility.hpp"
 
+static Compatibility comp;
 static PatchSet patchSet;
 
-// Boot-args to disable TB1/2 eGFX support
 static const char *bootargOff[] {
     "-krydisable"
 };
 
-// Boot-args to enable eGFX support on beta versions of macOS
+static const char *bootargDbg[] {
+    "-krydbg"
+};
+
 static const char *bootargBeta[] {
     "-krybeta"
 };
+
+void start() {
+    comp.init();
+    
+    if (comp.isUnsupported()) {
+        SYSLOG("startup", "System is not supported.");
+        return;
+    }
+    
+    patchSet.init();
+}
 
 PluginConfiguration ADDPR(config) {
     xStringify(PRODUCT_NAME),
@@ -21,13 +36,11 @@ PluginConfiguration ADDPR(config) {
     LiluAPI::AllowNormal,
     bootargOff,
     arrsize(bootargOff),
-    nullptr,
-    0,
+    bootargDbg,
+    arrsize(bootargDbg),
     bootargBeta,
     arrsize(bootargBeta),
     KernelVersion::Catalina,
     KernelVersion::BigSur,
-    []() {
-        patchSet.init();
-    }
+    start
 };

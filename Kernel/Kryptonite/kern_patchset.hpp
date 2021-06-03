@@ -13,7 +13,7 @@ struct KextPatch {
 
 class PatchSet {
 public:
-    const char* moduleName = "patchSet";
+    const char* moduleName = "patchset";
     
     mach_vm_address_t orgSkipEnumerationCallback {0};
     void init();
