@@ -9,15 +9,24 @@
 /* Begin PBXBuildFile section */
 		A8095DF526685F690000D34C /* kern_compatibility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8095DF326685F690000D34C /* kern_compatibility.cpp */; };
 		A8095DF626685F690000D34C /* kern_compatibility.hpp in Headers */ = {isa = PBXBuildFile; fileRef = A8095DF426685F690000D34C /* kern_compatibility.hpp */; };
+		A810C77C26687AF100CD8FDA /* kern_nvramargs.hpp in Headers */ = {isa = PBXBuildFile; fileRef = A810C77A26687AF100CD8FDA /* kern_nvramargs.hpp */; };
+		A810C77D26687AF100CD8FDA /* kern_nvramargs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A810C77B26687AF100CD8FDA /* kern_nvramargs.cpp */; };
 		A858650E26625AB10038DC5B /* kern_start.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A858650D26625AB10038DC5B /* kern_start.cpp */; };
 		A8586546266264150038DC5B /* kern_patchset.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8586544266264150038DC5B /* kern_patchset.cpp */; };
 		A8586547266264150038DC5B /* kern_patchset.hpp in Headers */ = {isa = PBXBuildFile; fileRef = A8586545266264150038DC5B /* kern_patchset.hpp */; };
 		A86043E32662A7400074664D /* plugin_start.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A86043E22662A7380074664D /* plugin_start.cpp */; };
+		A887D18526688574002501EA /* kern_patchapplicator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A887D18326688574002501EA /* kern_patchapplicator.cpp */; };
+		A887D18626688574002501EA /* kern_patchapplicator.hpp in Headers */ = {isa = PBXBuildFile; fileRef = A887D18426688574002501EA /* kern_patchapplicator.hpp */; };
+		A89CA88D266888AA0032CFFF /* kern_hooks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A89CA88B266888AA0032CFFF /* kern_hooks.cpp */; };
+		A89CA88E266888AA0032CFFF /* kern_hooks.hpp in Headers */ = {isa = PBXBuildFile; fileRef = A89CA88C266888AA0032CFFF /* kern_hooks.hpp */; };
+		A8FCD4E02668752100A39213 /* kern_targetkexts.hpp in Headers */ = {isa = PBXBuildFile; fileRef = A8FCD4DF2668752100A39213 /* kern_targetkexts.hpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		A8095DF326685F690000D34C /* kern_compatibility.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = kern_compatibility.cpp; sourceTree = "<group>"; };
 		A8095DF426685F690000D34C /* kern_compatibility.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = kern_compatibility.hpp; sourceTree = "<group>"; };
+		A810C77A26687AF100CD8FDA /* kern_nvramargs.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = kern_nvramargs.hpp; sourceTree = "<group>"; };
+		A810C77B26687AF100CD8FDA /* kern_nvramargs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = kern_nvramargs.cpp; sourceTree = "<group>"; };
 		A858650826625AB10038DC5B /* Kryptonite.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Kryptonite.kext; sourceTree = BUILT_PRODUCTS_DIR; };
 		A858650D26625AB10038DC5B /* kern_start.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = kern_start.cpp; sourceTree = "<group>"; };
 		A858650F26625AB10038DC5B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -60,6 +69,11 @@
 		A86043E02662A7380074664D /* entry32.S */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = entry32.S; sourceTree = "<group>"; };
 		A86043E12662A7380074664D /* wrappers.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = wrappers.inc; sourceTree = "<group>"; };
 		A86043E22662A7380074664D /* plugin_start.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = plugin_start.cpp; sourceTree = "<group>"; };
+		A887D18326688574002501EA /* kern_patchapplicator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = kern_patchapplicator.cpp; sourceTree = "<group>"; };
+		A887D18426688574002501EA /* kern_patchapplicator.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = kern_patchapplicator.hpp; sourceTree = "<group>"; };
+		A89CA88B266888AA0032CFFF /* kern_hooks.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = kern_hooks.cpp; sourceTree = "<group>"; };
+		A89CA88C266888AA0032CFFF /* kern_hooks.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = kern_hooks.hpp; sourceTree = "<group>"; };
+		A8FCD4DF2668752100A39213 /* kern_targetkexts.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = kern_targetkexts.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,7 +212,12 @@
 			isa = PBXGroup;
 			children = (
 				A8586544266264150038DC5B /* kern_patchset.cpp */,
+				A89CA88B266888AA0032CFFF /* kern_hooks.cpp */,
+				A89CA88C266888AA0032CFFF /* kern_hooks.hpp */,
 				A8586545266264150038DC5B /* kern_patchset.hpp */,
+				A8FCD4DF2668752100A39213 /* kern_targetkexts.hpp */,
+				A887D18326688574002501EA /* kern_patchapplicator.cpp */,
+				A887D18426688574002501EA /* kern_patchapplicator.hpp */,
 			);
 			name = Patchwork;
 			sourceTree = "<group>";
@@ -208,6 +227,8 @@
 			children = (
 				A858650D26625AB10038DC5B /* kern_start.cpp */,
 				A8095DF326685F690000D34C /* kern_compatibility.cpp */,
+				A810C77B26687AF100CD8FDA /* kern_nvramargs.cpp */,
+				A810C77A26687AF100CD8FDA /* kern_nvramargs.hpp */,
 				A8095DF426685F690000D34C /* kern_compatibility.hpp */,
 			);
 			name = Base;
@@ -220,7 +241,11 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A887D18626688574002501EA /* kern_patchapplicator.hpp in Headers */,
+				A89CA88E266888AA0032CFFF /* kern_hooks.hpp in Headers */,
+				A810C77C26687AF100CD8FDA /* kern_nvramargs.hpp in Headers */,
 				A8095DF626685F690000D34C /* kern_compatibility.hpp in Headers */,
+				A8FCD4E02668752100A39213 /* kern_targetkexts.hpp in Headers */,
 				A8586547266264150038DC5B /* kern_patchset.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -292,6 +317,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A810C77D26687AF100CD8FDA /* kern_nvramargs.cpp in Sources */,
+				A887D18526688574002501EA /* kern_patchapplicator.cpp in Sources */,
+				A89CA88D266888AA0032CFFF /* kern_hooks.cpp in Sources */,
 				A858650E26625AB10038DC5B /* kern_start.cpp in Sources */,
 				A8586546266264150038DC5B /* kern_patchset.cpp in Sources */,
 				A86043E32662A7400074664D /* plugin_start.cpp in Sources */,
