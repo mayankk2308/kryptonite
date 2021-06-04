@@ -21,11 +21,10 @@ void NVRAMArgs::getGPU() {
 void NVRAMArgs::getTBTVersion() {
     if (!PE_parse_boot_argn(tbtVersionArg, &tbtVersion, sizeof(tbtVersion))) {
         SYSLOG(moduleName, "Thunderbolt version not provided.");
-        tbtVersion = 3;
         return;
     }
     
-    if (tbtVersion < 0 | tbtVersion > 2) {
+    if (tbtVersion < 1 | tbtVersion > 3) {
         SYSLOG(moduleName, "Invalid or unsupported thunderbolt version provided.");
         return;
     }
@@ -44,4 +43,12 @@ bool NVRAMArgs::isAMD() {
 
 bool NVRAMArgs::isNVDA() {
     return !strcmp(gpu, nvda);
+}
+
+bool NVRAMArgs::isThunderbolt1() {
+    return tbtVersion == 1;
+}
+
+bool NVRAMArgs::isThunderbolt2() {
+    return tbtVersion == 2;
 }

@@ -28,6 +28,8 @@ public:
     void init();
     bool isAMD();
     bool isNVDA();
+    bool isThunderbolt1();
+    bool isThunderbolt2();
 };
 
 #endif /* kern_nvramargs_hpp */
