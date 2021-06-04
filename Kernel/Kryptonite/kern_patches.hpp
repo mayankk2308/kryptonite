@@ -18,6 +18,8 @@ private:
 public:
     static void unblockLegacyThunderbolt(KernelPatcher &patcher, KernelPatcher::KextInfo *kext, NVRAMArgs* args);
     static void bypassPCITunnelled(KernelPatcher &patcher, KernelPatcher::KextInfo *kext, NVRAMArgs* args);
+    static void updateMuxControlNVRAMVar(KernelPatcher &patcher, KernelPatcher::KextInfo *kext, NVRAMArgs* args);
+    static void routeThunderboltEnumeration(KernelPatcher &patcher, size_t *index, mach_vm_address_t *address, size_t *size);
 };
 
 #endif /* kern_patches_hpp */
