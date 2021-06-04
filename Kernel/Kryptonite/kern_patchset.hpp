@@ -21,7 +21,6 @@ private:
     mach_vm_address_t orgSkipEnumerationCallback {0};
     
     void processKext(KernelPatcher& patcher, size_t index, mach_vm_address_t address, size_t size);
-    static int hookedTBTSkipEnumeration();
 };
 
 #endif /* kern_patchset */

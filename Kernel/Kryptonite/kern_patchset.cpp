@@ -9,6 +9,7 @@
 #include "kern_patchapplicator.hpp"
 #include "kern_hooks.hpp"
 #include "kern_compatibility.hpp"
+#include "kern_patches.hpp"
 
 // For accessing NVRAM arguments
 static NVRAMArgs args;
@@ -40,26 +41,7 @@ void PatchSet::processKext(KernelPatcher& patcher, size_t index, mach_vm_address
         // Really messy for now, but any simplifications or casts were messing up patches
         // probably because I suck at C++, so leaving it as is for now since this works.
         if (!strcmp(kextList[i].id, kextList[0].id)) {
-            if (args.isAMD()) {
-                KernelPatcher::LookupPatch patch;
-                
-                if (Compatibility::isOlderKernel()) {
-                    uint8_t tbType = 0x33;
-                    if (args.isThunderbolt1()) {
-                        tbType = 0x31;
-                    } else if (args.isThunderbolt2()) {
-                        tbType = 0x32;
-                    }
-                    const uint8_t find[] = {0x49, 0x4f, 0x54, 0x68, 0x75, 0x6e, 0x64, 0x65, 0x72, 0x62, 0x6f, 0x6c, 0x74, 0x53, 0x77, 0x69, 0x74, 0x63, 0x68, 0x54, 0x79, 0x70, 0x65, 0x33};
-                    const uint8_t repl[] = {0x49, 0x4f, 0x54, 0x68, 0x75, 0x6e, 0x64, 0x65, 0x72, 0x62, 0x6f, 0x6c, 0x74, 0x53, 0x77, 0x69, 0x74, 0x63, 0x68, 0x54, 0x79, 0x70, 0x65, tbType};
-                    patch = {&kextList[i], find, repl, sizeof(find), 1};
-                } else {
-                    const uint8_t find[] = {0xf8, 0x03, 0x0f, 0x82, 0x78, 0xff, 0xff, 0xff, 0x49, 0x8b, 0x06, 0xc6, 0x80, 0x78, 0x01, 0x00};
-                    const uint8_t repl[] = {0xf8, 0x00, 0x0f, 0x82, 0x78, 0xff, 0xff, 0xff, 0x49, 0x8b, 0x06, 0xc6, 0x80, 0x78, 0x01, 0x00};
-                    patch = {&kextList[i], find, repl, sizeof(find), 1};
-                }
-                patchApplicator.applyLookupPatch(patcher, &patch);
-            }
+            Patches::unblockLegacyThunderbolt(patcher, &kextList[i], &args);
             
             if (args.isNVDA()) {
                 const uint8_t find[] = {0x49, 0x4f, 0x50, 0x43, 0x49, 0x54, 0x75, 0x6e, 0x6e, 0x65, 0x6c, 0x6c, 0x65, 0x64};
@@ -88,7 +70,6 @@ void PatchSet::processKext(KernelPatcher& patcher, size_t index, mach_vm_address
                 0x35, 0x36, 0x38, 0x36, 0x45, 0x33, 0x30, 0x46, 0x39, 0x3a, 0x67, 0x70, 0x75,
                 0x2d, 0x70, 0x6f, 0x77, 0x65, 0x72, 0x2d, 0x70, 0x72, 0x65, 0x66, 0x71};
             KernelPatcher::LookupPatch patch = {&kextList[i], find, repl, sizeof(find), 1};
-            
             patchApplicator.applyLookupPatch(patcher, &patch);
         }
         

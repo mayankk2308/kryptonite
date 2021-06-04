@@ -19,6 +19,8 @@
 		A887D18626688574002501EA /* kern_patchapplicator.hpp in Headers */ = {isa = PBXBuildFile; fileRef = A887D18426688574002501EA /* kern_patchapplicator.hpp */; };
 		A89CA88D266888AA0032CFFF /* kern_hooks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A89CA88B266888AA0032CFFF /* kern_hooks.cpp */; };
 		A89CA88E266888AA0032CFFF /* kern_hooks.hpp in Headers */ = {isa = PBXBuildFile; fileRef = A89CA88C266888AA0032CFFF /* kern_hooks.hpp */; };
+		A8BA0202266AB82B000D97CC /* kern_patches.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8BA0200266AB82B000D97CC /* kern_patches.cpp */; };
+		A8BA0203266AB82B000D97CC /* kern_patches.hpp in Headers */ = {isa = PBXBuildFile; fileRef = A8BA0201266AB82B000D97CC /* kern_patches.hpp */; };
 		A8FCD4E02668752100A39213 /* kern_targetkexts.hpp in Headers */ = {isa = PBXBuildFile; fileRef = A8FCD4DF2668752100A39213 /* kern_targetkexts.hpp */; };
 /* End PBXBuildFile section */
 
@@ -73,6 +75,8 @@
 		A887D18426688574002501EA /* kern_patchapplicator.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = kern_patchapplicator.hpp; sourceTree = "<group>"; };
 		A89CA88B266888AA0032CFFF /* kern_hooks.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = kern_hooks.cpp; sourceTree = "<group>"; };
 		A89CA88C266888AA0032CFFF /* kern_hooks.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = kern_hooks.hpp; sourceTree = "<group>"; };
+		A8BA0200266AB82B000D97CC /* kern_patches.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = kern_patches.cpp; sourceTree = "<group>"; };
+		A8BA0201266AB82B000D97CC /* kern_patches.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = kern_patches.hpp; sourceTree = "<group>"; };
 		A8FCD4DF2668752100A39213 /* kern_targetkexts.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = kern_targetkexts.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -211,9 +215,11 @@
 		A87973E22667E0F9002E0CF0 /* Patchwork */ = {
 			isa = PBXGroup;
 			children = (
-				A8586544266264150038DC5B /* kern_patchset.cpp */,
 				A89CA88B266888AA0032CFFF /* kern_hooks.cpp */,
 				A89CA88C266888AA0032CFFF /* kern_hooks.hpp */,
+				A8BA0200266AB82B000D97CC /* kern_patches.cpp */,
+				A8BA0201266AB82B000D97CC /* kern_patches.hpp */,
+				A8586544266264150038DC5B /* kern_patchset.cpp */,
 				A8586545266264150038DC5B /* kern_patchset.hpp */,
 				A8FCD4DF2668752100A39213 /* kern_targetkexts.hpp */,
 				A887D18326688574002501EA /* kern_patchapplicator.cpp */,
@@ -246,6 +252,7 @@
 				A810C77C26687AF100CD8FDA /* kern_nvramargs.hpp in Headers */,
 				A8095DF626685F690000D34C /* kern_compatibility.hpp in Headers */,
 				A8FCD4E02668752100A39213 /* kern_targetkexts.hpp in Headers */,
+				A8BA0203266AB82B000D97CC /* kern_patches.hpp in Headers */,
 				A8586547266264150038DC5B /* kern_patchset.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -317,6 +324,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A8BA0202266AB82B000D97CC /* kern_patches.cpp in Sources */,
 				A810C77D26687AF100CD8FDA /* kern_nvramargs.cpp in Sources */,
 				A887D18526688574002501EA /* kern_patchapplicator.cpp in Sources */,
 				A89CA88D266888AA0032CFFF /* kern_hooks.cpp in Sources */,
@@ -451,10 +459,11 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1.0.0;
-				DEVELOPMENT_TEAM = YF7XP6ZYSQ;
+				DEVELOPMENT_TEAM = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"MODULE_VERSION=$(MODULE_VERSION)",
 					"PRODUCT_NAME=$(PRODUCT_NAME)",
@@ -504,11 +513,12 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1.0.0;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = YF7XP6ZYSQ;
+				DEVELOPMENT_TEAM = "";
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"MODULE_VERSION=$(MODULE_VERSION)",
