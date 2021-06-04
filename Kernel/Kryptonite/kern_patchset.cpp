@@ -38,26 +38,13 @@ void PatchSet::processKext(KernelPatcher& patcher, size_t index, mach_vm_address
         
         SYSLOG(moduleName, "Found %s...", kextList[i].id);
         
-        // Really messy for now, but any simplifications or casts were messing up patches
-        // probably because I suck at C++, so leaving it as is for now since this works.
         if (!strcmp(kextList[i].id, kextList[0].id)) {
             Patches::unblockLegacyThunderbolt(patcher, &kextList[i], &args);
-            
-            if (args.isNVDA()) {
-                const uint8_t find[] = {0x49, 0x4f, 0x50, 0x43, 0x49, 0x54, 0x75, 0x6e, 0x6e, 0x65, 0x6c, 0x6c, 0x65, 0x64};
-                const uint8_t repl[] = {0x49, 0x4f, 0x50, 0x43, 0x49, 0x54, 0x75, 0x6e, 0x6e, 0x65, 0x6c, 0x6c, 0x65, 0x71};
-                KernelPatcher::LookupPatch patch = {&kextList[i], find, repl, sizeof(find), 1};
-                patchApplicator.applyLookupPatch(patcher, &patch);
-            }
+            Patches::bypassPCITunnelled(patcher, &kextList[i], &args);
         }
         
         if (!strcmp(kextList[i].id, kextList[1].id)) {
-            if (args.isNVDA()) {
-                const uint8_t find[] = {0x49, 0x4f, 0x50, 0x43, 0x49, 0x54, 0x75, 0x6e, 0x6e, 0x65, 0x6c, 0x6c, 0x65, 0x64};
-                const uint8_t repl[] = {0x49, 0x4f, 0x50, 0x43, 0x49, 0x54, 0x75, 0x6e, 0x6e, 0x65, 0x6c, 0x6c, 0x65, 0x71};
-                KernelPatcher::LookupPatch patch = {&kextList[i], find, repl, sizeof(find), 1};
-                patchApplicator.applyLookupPatch(patcher, &patch);
-            }
+            Patches::bypassPCITunnelled(patcher, &kextList[i], &args);
         }
         
         if (!strcmp(kextList[i].id, kextList[2].id)) {

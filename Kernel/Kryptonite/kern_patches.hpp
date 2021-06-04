@@ -17,6 +17,7 @@ private:
     
 public:
     static void unblockLegacyThunderbolt(KernelPatcher &patcher, KernelPatcher::KextInfo *kext, NVRAMArgs* args);
+    static void bypassPCITunnelled(KernelPatcher &patcher, KernelPatcher::KextInfo *kext, NVRAMArgs* args);
 };
 
 #endif /* kern_patches_hpp */

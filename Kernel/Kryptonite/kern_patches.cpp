@@ -34,3 +34,12 @@ void Patches::unblockLegacyThunderbolt(KernelPatcher &patcher, KernelPatcher::Ke
         patchApplicator.applyLookupPatch(patcher, &patch);
     }
 }
+
+void Patches::bypassPCITunnelled(KernelPatcher &patcher, KernelPatcher::KextInfo *kext, NVRAMArgs *args) {
+    if (args->isNVDA()) {
+        const uint8_t find[] = {0x49, 0x4f, 0x50, 0x43, 0x49, 0x54, 0x75, 0x6e, 0x6e, 0x65, 0x6c, 0x6c, 0x65, 0x64};
+        const uint8_t repl[] = {0x49, 0x4f, 0x50, 0x43, 0x49, 0x54, 0x75, 0x6e, 0x6e, 0x65, 0x6c, 0x6c, 0x65, 0x71};
+        KernelPatcher::LookupPatch patch = {kext, find, repl, sizeof(find), 1};
+        patchApplicator.applyLookupPatch(patcher, &patch);
+    }
+}
