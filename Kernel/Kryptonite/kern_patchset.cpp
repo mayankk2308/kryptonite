@@ -8,7 +8,6 @@
 #include "kern_nvramargs.hpp"
 #include "kern_patchapplicator.hpp"
 #include "kern_hooks.hpp"
-#include "kern_patches.hpp"
 #include "kern_compatibility.hpp"
 
 // For accessing NVRAM arguments
