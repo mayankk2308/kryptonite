@@ -5,14 +5,10 @@
 
 #include "kern_patchset.hpp"
 #include "kern_targetkexts.hpp"
-#include "kern_nvramargs.hpp"
 #include "kern_patches.hpp"
 
-// For accessing NVRAM arguments
-static NVRAMArgs args;
-
 void PatchSet::init() {
-    args.init();
+    Patches::init();
     LiluAPI::Error error = lilu.onKextLoad(kextList, kextListSize,
                                            [](void* user, KernelPatcher& patcher, size_t index, mach_vm_address_t address, size_t size) {
         PatchSet* patchset = static_cast<PatchSet*>(user);
@@ -33,16 +29,16 @@ void PatchSet::processKext(KernelPatcher& patcher, size_t index, mach_vm_address
         SYSLOG(moduleName, "Found %s...", kextList[i].id);
         
         if (!strcmp(kextList[i].id, kextList[0].id)) {
-            Patches::unblockLegacyThunderbolt(patcher, &kextList[i], &args);
-            Patches::bypassPCITunnelled(patcher, &kextList[i], &args);
+            Patches::unblockLegacyThunderbolt(patcher, &kextList[i]);
+            Patches::bypassPCITunnelled(patcher, &kextList[i]);
         }
         
         if (!strcmp(kextList[i].id, kextList[1].id)) {
-            Patches::bypassPCITunnelled(patcher, &kextList[i], &args);
+            Patches::bypassPCITunnelled(patcher, &kextList[i]);
         }
         
         if (!strcmp(kextList[i].id, kextList[2].id)) {
-            Patches::updateMuxControlNVRAMVar(patcher, &kextList[i], &args);
+            Patches::updateMuxControlNVRAMVar(patcher, &kextList[i]);
         }
         
         if (!strcmp(kextList[i].id, kextList[3].id)) {

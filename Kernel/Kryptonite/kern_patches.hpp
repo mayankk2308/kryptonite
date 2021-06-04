@@ -9,16 +9,16 @@
 #define kern_patches_hpp
 
 #include <Headers/kern_api.hpp>
-#include "kern_nvramargs.hpp"
 
 class Patches {
 private:
     constexpr static const char* moduleName = "patches";
     
 public:
-    static void unblockLegacyThunderbolt(KernelPatcher &patcher, KernelPatcher::KextInfo *kext, NVRAMArgs* args);
-    static void bypassPCITunnelled(KernelPatcher &patcher, KernelPatcher::KextInfo *kext, NVRAMArgs* args);
-    static void updateMuxControlNVRAMVar(KernelPatcher &patcher, KernelPatcher::KextInfo *kext, NVRAMArgs* args);
+    static void init();
+    static void unblockLegacyThunderbolt(KernelPatcher &patcher, KernelPatcher::KextInfo *kext);
+    static void bypassPCITunnelled(KernelPatcher &patcher, KernelPatcher::KextInfo *kext);
+    static void updateMuxControlNVRAMVar(KernelPatcher &patcher, KernelPatcher::KextInfo *kext);
     static void routeThunderboltEnumeration(KernelPatcher &patcher, size_t *index, mach_vm_address_t *address, size_t *size);
 };
 

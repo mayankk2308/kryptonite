@@ -13,15 +13,19 @@
 
 static PatchApplicator patchApplicator;
 
-void Patches::unblockLegacyThunderbolt(KernelPatcher &patcher, KernelPatcher::KextInfo *kext, NVRAMArgs* args) {
-    if (args->isAMD()) {
+void Patches::init() {
+    NVRAMArgs::init();
+}
+
+void Patches::unblockLegacyThunderbolt(KernelPatcher &patcher, KernelPatcher::KextInfo *kext) {
+    if (NVRAMArgs::isAMD()) {
         KernelPatcher::LookupPatch patch;
         
         if (Compatibility::isOlderKernel()) {
             uint8_t tbType = 0x33;
-            if (args->isThunderbolt1()) {
+            if (NVRAMArgs::isThunderbolt1()) {
                 tbType = 0x31;
-            } else if (args->isThunderbolt2()) {
+            } else if (NVRAMArgs::isThunderbolt2()) {
                 tbType = 0x32;
             }
             const uint8_t find[] = {0x49, 0x4f, 0x54, 0x68, 0x75, 0x6e, 0x64, 0x65, 0x72, 0x62, 0x6f, 0x6c, 0x74, 0x53, 0x77, 0x69, 0x74, 0x63, 0x68, 0x54, 0x79, 0x70, 0x65, 0x33};
@@ -36,8 +40,8 @@ void Patches::unblockLegacyThunderbolt(KernelPatcher &patcher, KernelPatcher::Ke
     }
 }
 
-void Patches::bypassPCITunnelled(KernelPatcher &patcher, KernelPatcher::KextInfo *kext, NVRAMArgs *args) {
-    if (args->isNVDA()) {
+void Patches::bypassPCITunnelled(KernelPatcher &patcher, KernelPatcher::KextInfo *kext) {
+    if (NVRAMArgs::isNVDA()) {
         const uint8_t find[] = {0x49, 0x4f, 0x50, 0x43, 0x49, 0x54, 0x75, 0x6e, 0x6e, 0x65, 0x6c, 0x6c, 0x65, 0x64};
         const uint8_t repl[] = {0x49, 0x4f, 0x50, 0x43, 0x49, 0x54, 0x75, 0x6e, 0x6e, 0x65, 0x6c, 0x6c, 0x65, 0x71};
         KernelPatcher::LookupPatch patch = {kext, find, repl, sizeof(find), 1};
@@ -45,7 +49,7 @@ void Patches::bypassPCITunnelled(KernelPatcher &patcher, KernelPatcher::KextInfo
     }
 }
 
-void Patches::updateMuxControlNVRAMVar(KernelPatcher &patcher, KernelPatcher::KextInfo *kext, NVRAMArgs *args) {
+void Patches::updateMuxControlNVRAMVar(KernelPatcher &patcher, KernelPatcher::KextInfo *kext) {
     const uint8_t find[] = {0x46, 0x41, 0x34, 0x43, 0x45, 0x32, 0x38, 0x44, 0x2d, 0x42, 0x36, 0x32, 0x46, 0x2d,
         0x34, 0x43, 0x39, 0x39, 0x2d, 0x39, 0x43, 0x43, 0x33, 0x2d, 0x36, 0x38, 0x31,
         0x35, 0x36, 0x38, 0x36, 0x45, 0x33, 0x30, 0x46, 0x39, 0x3a, 0x67, 0x70, 0x75,

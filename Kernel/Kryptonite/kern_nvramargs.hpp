@@ -21,15 +21,15 @@ private:
     
     constexpr static const char* tbtVersionArg = "krytbtv";
     
-    void getGPU();
-    void getTBTVersion();
+    static void getGPU();
+    static void getTBTVersion();
 
 public:
-    void init();
-    bool isAMD();
-    bool isNVDA();
-    bool isThunderbolt1();
-    bool isThunderbolt2();
+    static void init();
+    static bool isAMD();
+    static bool isNVDA();
+    static bool isThunderbolt1();
+    static bool isThunderbolt2();
 };
 
 #endif /* kern_nvramargs_hpp */
