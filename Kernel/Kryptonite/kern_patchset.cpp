@@ -38,7 +38,7 @@ void PatchSet::processKext(KernelPatcher& patcher, size_t index, mach_vm_address
         
         SYSLOG(moduleName, "Found %s...", kextList[i].id);
         
-        // Really messy for now, but any simplifications or casts were messing up patches,
+        // Really messy for now, but any simplifications or casts were messing up patches
         // probably because I suck at C++, so leaving it as is for now since this works.
         if (!strcmp(kextList[i].id, kextList[0].id)) {
             if (args.isAMD()) {
