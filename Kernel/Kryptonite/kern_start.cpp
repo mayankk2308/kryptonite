@@ -37,7 +37,7 @@ PluginConfiguration ADDPR(config) {
     arrsize(bootargDbg),
     bootargBeta,
     arrsize(bootargBeta),
-    KernelVersion::Catalina,
+    KernelVersion::HighSierra,
     KernelVersion::BigSur,
     start
 };
