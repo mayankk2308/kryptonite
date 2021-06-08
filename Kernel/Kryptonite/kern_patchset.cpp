@@ -46,7 +46,7 @@ void PatchSet::processKext(KernelPatcher& patcher, size_t index, mach_vm_address
         }
         
         if (!strcmp(kextList[i].id, kextList[4].id)) {
-            Patches::bypassPCITunnelled(patcher, &kextList[i], true);
+            Patches::bypassIOPCITunnelCompatible(patcher, &kextList[i]);
         }
     }
     

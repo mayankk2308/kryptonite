@@ -42,14 +42,35 @@ void Patches::unblockLegacyThunderbolt(KernelPatcher &patcher, KernelPatcher::Ke
     patchApplicator.applyLookupPatch(patcher, &patch);
 }
 
-void Patches::bypassPCITunnelled(KernelPatcher &patcher, KernelPatcher::KextInfo *kext, bool force) {
-    if (!NVRAMArgs::isNVDA() & !force) {
+void Patches::bypassPCITunnelled(KernelPatcher &patcher, KernelPatcher::KextInfo *kext) {
+    if (!NVRAMArgs::isNVDA()) {
         return;
     }
     
     const uint8_t find[] = {0x49, 0x4f, 0x50, 0x43, 0x49, 0x54, 0x75, 0x6e, 0x6e, 0x65, 0x6c, 0x6c, 0x65, 0x64};
     const uint8_t repl[] = {0x49, 0x4f, 0x50, 0x43, 0x49, 0x54, 0x75, 0x6e, 0x6e, 0x65, 0x6c, 0x6c, 0x65, 0x71};
     KernelPatcher::LookupPatch patch = {kext, find, repl, sizeof(find), 1};
+    patchApplicator.applyLookupPatch(patcher, &patch);
+}
+
+void Patches::bypassIOPCITunnelCompatible(KernelPatcher &patcher, KernelPatcher::KextInfo *kext) {
+    KernelPatcher::LookupPatch patch;
+    switch (getKernelVersion()) {
+        case KernelVersion::HighSierra:
+        case KernelVersion::Mojave: {
+            const uint8_t find[] = {0xff, 0x90, 0xa8, 0x02, 0x00, 0x00, 0x48, 0x85, 0xc0, 0x0f, 0x84, 0xbc, 0x00, 0x00, 0x00};
+            const uint8_t repl[] = {0xff, 0x90, 0xa8, 0x02, 0x00, 0x00, 0x48, 0x85, 0xc0, 0x48, 0xe9, 0xbc, 0x00, 0x00, 0x00};
+            patch = {kext, find, repl, sizeof(find), 1};
+            break;
+        }
+            
+        default: {
+            const uint8_t find[] = {0xff, 0x90, 0xa8, 0x02, 0x00, 0x00, 0x48, 0x85, 0xc0, 0x0f, 0x84, 0xb9, 0x00, 0x00, 0x00};
+            const uint8_t repl[] = {0xff, 0x90, 0xa8, 0x02, 0x00, 0x00, 0x48, 0x85, 0xc0, 0x48, 0xe9, 0xb9, 0x00, 0x00, 0x00};
+            patch = {kext, find, repl, sizeof(find), 1};
+            break;
+        }
+    }
     patchApplicator.applyLookupPatch(patcher, &patch);
 }
 
