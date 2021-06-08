@@ -44,6 +44,10 @@ void PatchSet::processKext(KernelPatcher& patcher, size_t index, mach_vm_address
         if (!strcmp(kextList[i].id, kextList[3].id)) {
             Patches::routeThunderboltEnumeration(patcher, &index, &address, &size);
         }
+        
+        if (!strcmp(kextList[i].id, kextList[4].id)) {
+            Patches::bypassPCITunnelled(patcher, &kextList[i], true);
+        }
     }
     
     patcher.clearError();
