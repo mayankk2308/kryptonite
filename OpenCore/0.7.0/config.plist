@@ -49,7 +49,7 @@
 			<key>EnableWriteUnprotector</key>
 			<false/>
 			<key>ForceBooterSignature</key>
-			<false/>
+			<true/>
 			<key>ForceExitBootServices</key>
 			<false/>
 			<key>ProtectMemoryRegions</key>
@@ -183,9 +183,9 @@
 		<key>Scheme</key>
 		<dict>
 			<key>FuzzyMatch</key>
-			<true/>
+			<false/>
 			<key>KernelArch</key>
-			<string>x86_64</string>
+			<string>Auto</string>
 			<key>KernelCache</key>
 			<string>Auto</string>
 		</dict>
@@ -213,7 +213,7 @@
 			<key>PickerMode</key>
 			<string>External</string>
 			<key>PickerVariant</key>
-			<string>Modern</string>
+			<string>Acidanthera\GoldenGate</string>
 			<key>PollAppleHotKeys</key>
 			<false/>
 			<key>ShowPicker</key>
@@ -295,24 +295,6 @@
 				<key>Auxiliary</key>
 				<true/>
 			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>BookKicker.efi</string>
-				<key>RealPath</key>
-				<false/>
-				<key>Name</key>
-				<string>Boot Kicker</string>
-				<key>TextMode</key>
-				<false/>
-				<key>Enabled</key>
-				<true/>
-				<key>Arguments</key>
-				<string></string>
-				<key>Path</key>
-				<string>BootKicker.efi</string>
-				<key>Auxiliary</key>
-				<true/>
-			</dict>
 		</array>
 	</dict>
 	<key>NVRAM</key>
@@ -354,21 +336,21 @@
 			<key>MaxBIOSVersion</key>
 			<false/>
 			<key>MLB</key>
-			<string>M0000000000000001</string>
+			<string></string>
 			<key>ProcessorType</key>
 			<integer>0</integer>
 			<key>ROM</key>
-			<data>ESIzRFVm</data>
+			<data></data>
 			<key>SpoofVendor</key>
 			<false/>
 			<key>SystemMemoryStatus</key>
-			<string>Auto</string>
+			<string></string>
 			<key>SystemProductName</key>
-			<string>iMac19,1</string>
+			<string></string>
 			<key>SystemSerialNumber</key>
-			<string>W00000000001</string>
+			<string></string>
 			<key>SystemUUID</key>
-			<string>00000000-0000-0000-0000-000000000000</string>
+			<string></string>
 		</dict>
 		<key>UpdateDataHub</key>
 		<false/>
@@ -377,7 +359,7 @@
 		<key>UpdateSMBIOS</key>
 		<false/>
 		<key>UpdateSMBIOSMode</key>
-		<string>Create</string>
+		<string></string>
 		<key>UseRawUuidEncoding</key>
 		<false/>
 	</dict>
@@ -401,7 +383,7 @@
 		<key>AppleInput</key>
 		<dict>
 			<key>AppleEvent</key>
-			<string>Builtin</string>
+			<string>OEM</string>
 			<key>CustomDelays</key>
 			<false/>
 			<key>KeyInitialDelay</key>
@@ -448,7 +430,7 @@
 			<key>KeyForgetThreshold</key>
 			<integer>5</integer>
 			<key>KeySupport</key>
-			<true/>
+			<false/>
 			<key>KeySupportMode</key>
 			<string>Auto</string>
 			<key>KeySwap</key>
@@ -456,9 +438,9 @@
 			<key>PointerSupport</key>
 			<false/>
 			<key>PointerSupportMode</key>
-			<string>ASUS</string>
+			<string></string>
 			<key>TimerResolution</key>
-			<integer>50000</integer>
+			<integer>0</integer>
 		</dict>
 		<key>Output</key>
 		<dict>
