@@ -1,14 +1,14 @@
 #!/bin/sh
 
 # kryptonite.sh
-# Version: 0.9.0
+# Version: 1.0.0
 # Author: @mayankk2308 github.com / @mac_editor egpu.io
 script="$0"
 
 configure_environment() {
   b="$(tput bold)"
   n="$(tput sgr0)"
-  version="0.9.0"
+  version="1.0.0"
   pb="/usr/libexec/PlistBuddy"
   work_dir="/Library/Application Support/Kryptonite"
   mkdir -p "${work_dir}"
@@ -235,6 +235,7 @@ bless_kryptonite() {
   printfn "${b}Blessing disk...${n}"
   bless --folder "${main_dir}/EFI/BOOT" --label "Kryptonite"
   exit_if_failed "Failed to bless bootloader. Exiting."
+  printfn "Disk blessed."
 }
 
 get_tb_version() {

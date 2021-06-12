@@ -26,12 +26,24 @@ With **Kryptonite**, you get the following benefits over **PurgeWrangler**:
 3. **Clean system**: Because all patches are performed in memory, your system is untouched when booted without the **Kryptonite/OpenCore** disk.
 
 ## Installation
+If you are using this on a **T2 mac**, please disable **T2 security**. Additionally, if you have used **PurgeWrangler** before, it must be uninstalled before using **Kryptonite**. No need to disable **SIP** or **Authenticated-Root**.
+
 To start the process, copy-paste the following command into **Terminal**:
 ```shell
 curl -qLs $(curl -qs "https://api.github.com/repos/mayankk2308/kryptonite/releases/latest" | grep '"browser_download_url":' | grep ".sh" | sed -E 's/.*"([^"]+)".*/\1/') > k.sh; sh k.sh; rm k.sh
 ```
 
 If you are already using **OpenCore** like for running unsupported versions of macOS, let the installer know when asked. This will let the installer update your existing configuration with **Kryptonite** support. If this is your first time setting up **OpenCore**, the installer will require a disk to format. Currently APFS volumes are not supported, so if you want to use an internal volume, create an HFS/FAT32 volume in **Disk Utility**. The volume will then show up in the installer when selecting a volume to format. If you are trying to use this on **beta** versions of macOS, pleasee see the **Configuration** section below.
+
+### Debugging
+If you have issues, please share your logs. To do this, first ensure you create the bootloader again and use **DEBUG** resources using the installer. If you have a pre-configured OpenCore setup (such as with OpenCore Legacy Patcher), then enable debug mode as follows: https://dortania.github.io/OpenCore-Install-Guide/troubleshooting/debug.html
+
+Additionally, make sure to add the following boot-args for kext debugging:
+```shell
+-liludbgall -krydbg liludump=60
+```
+
+You can add the boot-args to the OpenCore **config.plist** boot-args section alongside your other arguments. When you boot the debug configuration for OpenCore, you will find the logs generated next to the `EFI` folder on your bootloader disk. For the kext logs from **Lilu**, check `/var/log/` folder for logs. For debugging, we would need both these files.
 
 ### Things Missing in the Installer
 - Downloading NVIDIA Web Drivers for using a Maxwell or Pascal NVIDIA GPU on **macOS High Sierra**.
