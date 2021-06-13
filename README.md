@@ -42,17 +42,14 @@ The steps are as follows:
    ```
    You should also enable SIP and make sure your system can successfully boot. On macOS Big Sur or later, I recommend reinstalling macOS to re-seal your boot volume.
 1. Go to **Disk Utility** and [create](https://osxdaily.com/2020/06/29/how-create-new-partition-mac/) a new **MS-DOS (FAT32)** partition (internal or external) **if you do not already have a bootloader disk**.
-1. Copy-paste the following command into **Terminal**:
-
-   ```shell
-   curl -qLs $(curl -qs "https://api.github.com/repos/mayankk2308/kryptonite/releases/latest" | grep '"browser_download_url":' | grep ".sh" | sed -E 's/.*"([^"]+)".*/\1/') > k.sh; sh k.sh; rm k.sh
-   ```
-1. Follow the instructions in the script to set up **Kryptonite**. If you are setting up the bootloader from scratch, choose the disk you created in **step 3**.
+1. Download **Kryptonite-RELEASE** from the [Releases](https://github.com/mayankk2308/kryptonite/releases). If you want to emit logs for testing, download the **DEBUG** version.
+1. Unzip and copy the `EFI` folder to your created disk. Then edit the **config.plist** file and add the required **boot-args** you need. Check the [System](https://github.com/mayankk2308/kryptonite#system) section for more information.
 
 ### Key Notes
+1. Installer is disabled as there are some issues and work is being done on it.
 1. The installer can configure existing bootloaders as well. Just let the installer know when asked and follow the prompts.
-2. APFS volumes are currently not shown in the installer for formatting or resizing. This feature may be added later.
-3. The kernel extensions are automatically disabled on untested/beta versions of macOS. To enable them, follow [these instructions](https://github.com/mayankk2308/kryptonite#beta-versions-of-macos).
+1. APFS volumes are currently not shown in the installer for formatting or resizing. This feature may be added later.
+1. The kernel extensions are automatically disabled on untested/beta versions of macOS. To enable them, follow [these instructions](https://github.com/mayankk2308/kryptonite#beta-versions-of-macos).
 
 ## Uninstallation
 Uninstalling **Kryptonite** is very straightforward:
