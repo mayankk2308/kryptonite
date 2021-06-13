@@ -26,14 +26,39 @@ With **Kryptonite**, you get the following benefits over **PurgeWrangler**:
 3. **Clean system**: Because all patches are performed in memory, your system is untouched when booted without the **Kryptonite/OpenCore** disk.
 
 ## Installation
-If you are using this on a **T2 mac**, please disable **T2 security**. Additionally, if you have used **PurgeWrangler** before, it must be uninstalled before using **Kryptonite**. No need to disable **SIP** or **Authenticated-Root**.
+The steps are as follows:
+1. If you are using this on a **T2 mac**, please disable **T2 security**.
+1. If you have used **PurgeWrangler** before, it must be uninstalled:
 
-To start the process, copy-paste the following command into **Terminal**:
-```shell
-curl -qLs $(curl -qs "https://api.github.com/repos/mayankk2308/kryptonite/releases/latest" | grep '"browser_download_url":' | grep ".sh" | sed -E 's/.*"([^"]+)".*/\1/') > k.sh; sh k.sh; rm k.sh
-```
+   ```shell
+   purge-wrangler -u
+   ```
+   You should also enable SIP and make sure your system can successfully boot. On macOS Big Sur or later, I recommend reinstalling macOS to re-seal your boot volume.
+1. Go to **Disk Utility** and create a new **FAT32** partition (internal or external) **if you do not already have a bootloader disk**.
+1. Copy-paste the following command into **Terminal**:
 
-If you are already using **OpenCore** like for running unsupported versions of macOS, let the installer know when asked. This will let the installer update your existing configuration with **Kryptonite** support. If this is your first time setting up **OpenCore**, the installer will require a disk to format. Currently APFS volumes are not supported, so if you want to use an internal volume, create an HFS/FAT32 volume in **Disk Utility**. The volume will then show up in the installer when selecting a volume to format. If you are trying to use this on **beta** versions of macOS, pleasee see the **Configuration** section below.
+   ```shell
+   curl -qLs $(curl -qs "https://api.github.com/repos/mayankk2308/kryptonite/releases/latest" | grep '"browser_download_url":' | grep ".sh" | sed -E 's/.*"([^"]+)".*/\1/') > k.sh; sh k.sh; rm k.sh
+   ```
+1. Follow the instructions in the script to set up **Kryptonite**. If you are setting up the bootloader from scratch, choose the disk you created in **step 3**.
+
+### Key Notes
+1. The installer can configure existing bootloaders as well. Just let the installer know when asked and follow the prompts.
+2. APFS volumes are currently not shown in the installer for formatting or resizing. This feature may be added later.
+3. The kernel extensions are automatically disabled on untested/beta versions of macOS. To enable them, follow [these instructions](https://github.com/mayankk2308/kryptonite#beta-versions-of-macos).
+
+## Uninstallation
+Uninstalling **Kryptonite** is very straightforward:
+1. On boot, press and hold **OPTION** key.
+1. Select your macOS boot volume instead of **Kryptonite**.
+1. Press **CTRL + ENTER** to set it as default boot volume and boot normally.
+1. Delete the **Kryptonite** partition/disk via **Disk Utility**.
+1. [Reset NVRAM](https://support.apple.com/en-us/HT204063) only if SIP is currently enabled for your system. Otherwise, delete `boot-args` as follows:
+   ```shell
+   sudo nvram -d boot-args
+   ```
+
+At **step 4**, you can alternatively keep the disk and use it on-demand by selecting it manually during boot. If you want to use **OpenCore** but remove **Kryptonite**, you can simply disable the kernel extension in your **config.plist**.
 
 ### Debugging
 If you have issues, please share your logs. To do this, first ensure you create the bootloader again and use **DEBUG** resources using the installer. If you have a pre-configured OpenCore setup (such as with OpenCore Legacy Patcher), then enable debug mode as follows: https://dortania.github.io/OpenCore-Install-Guide/troubleshooting/debug.html
@@ -63,12 +88,7 @@ Add these after the already-present **boot-args**.
 #### Disabling NVIDIA Discrete GPU
 If you are using an AMD eGPU with a Mac that has a discrete NVIDIA GPU, display outputs may not work on the eGPU. To fix this, you can disable the discrete GPU as follows:
 1. Configure the bootloader to power off the NVIDIA GPU. Follow instructions [here](https://dortania.github.io/OpenCore-Install-Guide/extras/spoof.html). Use the **DeviceProperties** approach on that page.
-2. **Add** the following to your **boot-args**:
-  ```shell
-  nv_disable=1
-  ```
-  This ensures that when booting without the bootloader, the GPU remains disabled so as not to flip the GPU mux back to discrete GPU on next boot.
-3. Switch mux to iGPU:
+2. Switch mux to iGPU:
   ```shell
   sudo nvram FA4CE28D-B62F-4C99-9CC3-6815686E30F9:gpu-power-prefs=%01%00%00%00
   ```
