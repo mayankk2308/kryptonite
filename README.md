@@ -21,9 +21,16 @@ You can control **Kryptonite**'s behavior using boot-args specified in the OpenC
 
 ## Features
 With **Kryptonite**, you get the following benefits over **PurgeWrangler**:
-1. **One-time configuration**: You only have to set up **Kryptonite** once, and it will continue to work through Apple software updates.
-2. **Security**: You can use your mac with all security features enabled - excluding **T2 chip** if used on those Macs.
-3. **Clean system**: Because all patches are performed in memory, your system is untouched when booted without the **Kryptonite/OpenCore** disk.
+1. You only have to set up **Kryptonite** once, and it will continue to work through Apple software updates.
+1. You can use your mac with all security features enabled - excluding **T2 chip** if used on those Macs.
+1. Because all patches are performed in memory, your system is untouched when booted without the **Kryptonite/OpenCore** disk.
+1. Automatic patching for all installations of macOS booted via the **Kryptonite/OpenCore** disk.
+1. Free benefits from **OpenCore** such as the ability to enable iGPUs and inject DSDT overrides to address **error 12** in Bootcamp.
+
+Additional benefits on **macOS Big Sur** and later:
+1. Boot volume seal is not tampered with - meaning a truly native experience without compromises.
+1. **FileVault** can now be used without compromise on old macs along with eGFX support.
+1. Smaller **delta software updates** are supported as system is clean and security features are enabled.
 
 ## Installation
 The steps are as follows:
