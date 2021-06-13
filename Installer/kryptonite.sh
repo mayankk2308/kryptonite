@@ -163,7 +163,7 @@ erase_disk() {
   printfn "${b}Formatting disk (${disk_to_format})...${n}"
   diskutil eraseVolume FAT32 KRYPTONITE "${disk_to_format}" 1>/dev/null
   exit_if_failed "Failed to erase volume. Exiting."
-  main_dir="$(diskutil info "${pids[$userinput]}" | grep -i "mount point" | cut -d':' -f2 | awk '{$1=$1};1')"
+  main_dir="$(diskutil info "${disk_to_format}" | grep -i "mount point" | cut -d':' -f2 | awk '{$1=$1};1')"
   if [ ! -e "${main_dir}" ]; then
     printfn "Failed to find formatted volume root. Exiting."
     exit 1
