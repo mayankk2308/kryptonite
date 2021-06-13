@@ -41,7 +41,7 @@ The steps are as follows:
    purge-wrangler -u
    ```
    You should also enable SIP and make sure your system can successfully boot. On macOS Big Sur or later, I recommend reinstalling macOS to re-seal your boot volume.
-1. Go to **Disk Utility** and create a new **FAT32** partition (internal or external) **if you do not already have a bootloader disk**.
+1. Go to **Disk Utility** and [create](https://osxdaily.com/2020/06/29/how-create-new-partition-mac/) a new **MS-DOS (FAT32)** partition (internal or external) **if you do not already have a bootloader disk**.
 1. Copy-paste the following command into **Terminal**:
 
    ```shell
