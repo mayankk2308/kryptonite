@@ -41,9 +41,15 @@ The steps are as follows:
    purge-wrangler -u
    ```
    You should also enable SIP and make sure your system can successfully boot. On macOS Big Sur or later, I recommend reinstalling macOS to re-seal your boot volume.
-1. Go to **Disk Utility** and [create](https://osxdaily.com/2020/06/29/how-create-new-partition-mac/) a new **MS-DOS (FAT32)** partition (internal or external) **if you do not already have a bootloader disk**.
+1. Go to **Disk Utility** and [create](https://osxdaily.com/2020/06/29/how-create-new-partition-mac/) a new **MS-DOS (FAT32)** partition (internal or external) **if you do not already have a bootloader disk**. Call the partition `KRYPTONITE`.
 1. Download **Kryptonite-RELEASE** from the [Releases](https://github.com/mayankk2308/kryptonite/releases). If you want to emit logs for testing, download the **DEBUG** version.
 1. Unzip and copy the `EFI` folder to your created disk. Then edit the **config.plist** file and add the required **boot-args** you need. Check the [System](https://github.com/mayankk2308/kryptonite#system) section for more information.
+1. Bless the bootloader as follows:
+   ```shell
+   sudo bless --folder /Volumes/KRYPTONITE/EFI/BOOT --label Kryptonite
+   ```
+1. When booting the system, press and hold **OPTION** key, then select the **Kryptonite** boot disk.
+1. This will launch another boot menu where you can select your macOS boot drive. Booting from here will patch the system in memory.
 
 ### Key Notes
 1. Installer is disabled as there are some issues and work is being done on it.
