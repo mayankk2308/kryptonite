@@ -150,18 +150,18 @@ select_disk() {
   fi
   
   userinput=$(( $userinput - 1 ))
+  disk_to_format="${pids[$userinput]}"
   
   printfn "\nSelected Disk: ${b}${pnames[$userinput]}${n}"
-  printfn "Disk Identifier: ${b}${pids[$userinput]}${n}"
+  printfn "Disk Identifier: ${b}${disk_to_format}${n}"
 }
 
 erase_disk() {
   printfc
   yesno_action "${b}Format disk${n}?"
   exit_if_failed "Aborting disk format."
-  
-  printfn "${b}Formatting disk...${n}"
-  diskutil eraseVolume FAT32 KRYPTONITE "${pids[$userinput]}" 1>/dev/null
+  printfn "${b}Formatting disk (${disk_to_format})...${n}"
+  diskutil eraseVolume FAT32 KRYPTONITE "${disk_to_format}" 1>/dev/null
   exit_if_failed "Failed to erase volume. Exiting."
   main_dir="$(diskutil info "${pids[$userinput]}" | grep -i "mount point" | cut -d':' -f2 | awk '{$1=$1};1')"
   if [ ! -e "${main_dir}" ]; then
