@@ -61,10 +61,9 @@ validate_macos_version() {
   macos_major_ver="$(printfn "${macos_ver}" | cut -d '.' -f2)"
   macos_minor_ver="$(printfn "${macos_ver}" | cut -d '.' -f3)"
   [ -z "${macos_minor_ver}" ] && macos_minor_ver=0
-  (( $macos_primary_ver > 10 )) && return
-  if ( (( $macos_major_ver < 13 )) || 
-  ( (( ${macos_major_ver} = 13 )) && 
-  (( ${macos_minor_ver} < 4 )) ) ); then
+  [ $macos_primary_ver -gt 10 ] && return
+  if [ $macos_major_ver -lt 13 ] || 
+  ( [ ${macos_major_ver} -eq 13 ] && [ ${macos_minor_ver} -lt 4 ] ); then
     printfn "${b}macOS 10.13.4${n} or newer required.\n"
     exit 1
   fi
