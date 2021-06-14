@@ -52,10 +52,7 @@ The steps are as follows:
 1. This will launch another boot menu where you can select your macOS boot drive. Booting from here will patch the system in memory.
 
 ### Key Notes
-1. Installer is disabled as there are some issues and work is being done on it.
-1. The installer can configure existing bootloaders as well. Just let the installer know when asked and follow the prompts.
-1. APFS volumes are currently not shown in the installer for formatting or resizing. This feature may be added later.
-1. The kernel extensions are automatically disabled on untested/beta versions of macOS. To enable them, follow [these instructions](https://github.com/mayankk2308/kryptonite#beta-versions-of-macos).
+The kernel extensions are automatically disabled on untested/beta versions of macOS. To enable them, follow [these instructions](https://github.com/mayankk2308/kryptonite#beta-versions-of-macos).
 
 ## Uninstallation
 Uninstalling **Kryptonite** is very straightforward:
@@ -96,7 +93,7 @@ By default, **Kryptonite** will be disabled on **beta** or **untested** versions
 Add these after the already-present **boot-args**.
 
 #### Disabling NVIDIA Discrete GPU
-If you are using an AMD eGPU with a Mac that has a discrete NVIDIA GPU, display outputs may not work on the eGPU. To fix this, you can disable the discrete GPU as follows:
+If you are using an AMD eGPU with a Mac that has a discrete NVIDIA GPU, display outputs may not work on the eGPU. To fix this, you can disable the discrete GPU. This is only applicable for macs with dual GPUs, such as MacBook Pros:
 1. Configure the bootloader to power off the NVIDIA GPU. Follow instructions [here](https://dortania.github.io/OpenCore-Install-Guide/extras/spoof.html). Use the **DeviceProperties** approach on that page.
 2. Switch mux to iGPU:
   ```shell
