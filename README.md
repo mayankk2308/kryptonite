@@ -9,7 +9,7 @@ Unlike [PurgeWrangler](https://github.com/mayankk2308/purge-wrangler), which req
 ## System
 **Kryptonite** leverages [OpenCore](https://github.com/acidanthera/OpenCorePkg) with a heavily simplified configuration for native Macs to inject kernel/kext patches into macOS during boots. The patches themselves are implemented in a **kernel extension** named **Kryptonite** that leverages [Lilu](https://github.com/acidanthera/Lilu) which can patch kexts and processes in memory.
 
-You can control **Kryptonite**'s behavior using boot-args specified in the OpenCore **config.plist**. The kernel extension supports the following boot arguments:
+You can control **Kryptonite**'s behavior using boot-args specified in the OpenCore **config.plist** located in the `EFI/OC` folder on your bootloader disk. The kernel extension supports the following boot arguments:
 
 | Boot Arg | Description |
 | :----------------: | :------------ |
@@ -51,8 +51,9 @@ The steps are as follows:
 1. When booting the system, press and hold **OPTION** key, then select the **Kryptonite** boot disk.
 1. This will launch another boot menu where you can select your macOS boot drive. Booting from here will patch the system in memory.
 
-### Key Notes
-The kernel extensions are automatically disabled on untested/beta versions of macOS. To enable them, follow [these instructions](https://github.com/mayankk2308/kryptonite#beta-versions-of-macos).
+### Post-Install
+1. The kernel extensions are automatically disabled on untested/beta versions of macOS. To enable them, follow [these instructions](https://github.com/mayankk2308/kryptonite#beta-versions-of-macos).
+2. If you want to boot directly into macOS without requiring to select the boot disk on every startup, follow [these steps](https://github.com/mayankk2308/kryptonite#automatically-booting-macos-via-kryptonite).
 
 ## Uninstallation
 Uninstalling **Kryptonite** is very straightforward:
@@ -61,6 +62,7 @@ Uninstalling **Kryptonite** is very straightforward:
 1. Press **CTRL + ENTER** to set it as default boot volume and boot normally.
 1. Delete the **Kryptonite** partition/disk via **Disk Utility**.
 1. [Reset NVRAM](https://support.apple.com/en-us/HT204063) only if SIP is currently enabled for your system. Otherwise, delete `boot-args` as follows:
+   
    ```shell
    sudo nvram -d boot-args
    ```
@@ -84,6 +86,14 @@ You can add the boot-args to the OpenCore **config.plist** boot-args section alo
 
 ### Configuration
 To manually edit configurations, use [ProperTree](https://github.com/corpnewt/ProperTree#on-nix-systems) to open the **config.plist** file on your bootloader. This file is located on your bootloader disk in the `EFI/OC/` directory. If you are comfortable doing so, you can edit the file in **TextEdit** - just be careful with the format and XML tags. This section describes some common configuration changes you may want to make:
+
+#### Automatically Booting macOS via Kryptonite
+By default, when booting via **Kryptonite**, you will get a boot picker that times out after **10 seconds**. However, if you only have a single macOS installation and always want to boot directly into it without having to see the bootloader or wait for timeout:
+1. In your **config.plist**, set `Timeout` in the `Misc > Boot` section to `0`.
+1. When booting, press and hold `OPTION` key to bring up the default Apple bootpicker.
+1. Navigate to the `Kryptonite` boot disk and press `CTRL + ENTER` to make it the default boot volume from now on.
+   
+Your system should now boot via `Kryptonite` every time and not show the bootloader.
 
 #### Beta Versions of macOS
 By default, **Kryptonite** will be disabled on **beta** or **untested** versions of macOS. To enable this, you need to update the **boot-args** in your **config.plist**. Specifically, you need to **add** the following arguments:
