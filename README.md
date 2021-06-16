@@ -6,6 +6,19 @@ Kryptonite enables external GPUs on Macs using Thunderbolt 1 and 2 without compr
 
 Unlike [PurgeWrangler](https://github.com/mayankk2308/purge-wrangler), which requires these security features disabled and modifies kernel extensions on the root volume, **Kryptonite** injects patches via EFI and performs them in memory, when the offending kernel extensions load. This project supercedes the PurgeWrangler system.
 
+## Features
+With **Kryptonite**, you get the following benefits over **PurgeWrangler**:
+1. You only have to set up **Kryptonite** once, and it will continue to work through Apple software updates.
+1. You can use your mac with all security features enabled - excluding **T2 chip** if used on those Macs.
+1. Because all patches are performed in memory, your system is untouched when booted without the **Kryptonite/OpenCore** disk.
+1. Automatic patching for all installations of macOS booted via the **Kryptonite/OpenCore** disk.
+1. Free benefits from **OpenCore** such as the ability to enable iGPUs and inject DSDT overrides to address **error 12** in Bootcamp.
+
+Additional benefits on **macOS Big Sur** and later:
+1. Boot volume seal is not tampered with - meaning a truly native experience without compromises.
+1. **FileVault** can now be used without compromise on old macs along with eGFX support.
+1. Smaller **delta software updates** are supported as system is clean and security features are enabled.
+
 ## System
 **Kryptonite** leverages [OpenCore](https://github.com/acidanthera/OpenCorePkg) with a heavily simplified configuration for native Macs to inject kernel/kext patches into macOS during boots. The patches themselves are implemented in a **kernel extension** named **Kryptonite** that leverages [Lilu](https://github.com/acidanthera/Lilu) which can patch kexts and processes in memory.
 
@@ -19,18 +32,10 @@ You can control **Kryptonite**'s behavior using boot-args specified in the OpenC
 | `krygpu=` | Provide GPU vendor to patch for. Must be `AMD` or `NVDA`. |
 | `krytbtv=` | Provide Thunderbolt NHI version. Required for **macOS ≤ 10.15**. Must be `1` or `2`. |
 
-## Features
-With **Kryptonite**, you get the following benefits over **PurgeWrangler**:
-1. You only have to set up **Kryptonite** once, and it will continue to work through Apple software updates.
-1. You can use your mac with all security features enabled - excluding **T2 chip** if used on those Macs.
-1. Because all patches are performed in memory, your system is untouched when booted without the **Kryptonite/OpenCore** disk.
-1. Automatic patching for all installations of macOS booted via the **Kryptonite/OpenCore** disk.
-1. Free benefits from **OpenCore** such as the ability to enable iGPUs and inject DSDT overrides to address **error 12** in Bootcamp.
-
-Additional benefits on **macOS Big Sur** and later:
-1. Boot volume seal is not tampered with - meaning a truly native experience without compromises.
-1. **FileVault** can now be used without compromise on old macs along with eGFX support.
-1. Smaller **delta software updates** are supported as system is clean and security features are enabled.
+All the above arguments should go into the **boot-args** String in **config.plist**. For example, if you want to set to patch for AMD GPUs, your boot-args would have:
+```shell
+krygpu=AMD
+```
 
 ## Installation
 The steps are as follows:
