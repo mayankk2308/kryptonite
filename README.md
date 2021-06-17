@@ -37,6 +37,9 @@ All the above arguments should go into the **boot-args** String in **config.plis
 krygpu=AMD
 ```
 
+## Disclaimer
+As with most open source software hacks, you use this software at your own risk. **Kryptonite** uses **OpenCore** to inject patches via EFI. Please keep in mind that while these packages are tested extensively, there is always an extremely small chance something could go wrong and brick your device.
+
 ## Installation
 The steps are as follows:
 1. If you are using this on a **T2 mac**, please disable **T2 security**.
