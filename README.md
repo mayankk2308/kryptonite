@@ -32,7 +32,7 @@ You can control **Kryptonite**'s behavior using boot-args specified in the OpenC
 | `krygpu=` | Provide GPU vendor to patch for. Must be `AMD` or `NVDA`. |
 | `krytbtv=` | Provide Thunderbolt NHI version. Required for **macOS ≤ 10.15**. Must be `1` or `2`. |
 
-All the above arguments should go into the **boot-args** String in **config.plist**. For example, if you want to set to patch for AMD GPUs, your boot-args would have:
+All the above arguments should go into the **boot-args** String in **config.plist** in the `NVRAM` section. For example, if you want to set to patch for AMD GPUs, your boot-args would have:
 ```shell
 krygpu=AMD
 ```
@@ -50,8 +50,8 @@ The steps are as follows:
    ```
    You should also enable SIP and make sure your system can successfully boot. On macOS Big Sur or later, I recommend reinstalling macOS to re-seal your boot volume.
 1. Go to **Disk Utility** and [create](https://osxdaily.com/2020/06/29/how-create-new-partition-mac/) a new **MS-DOS (FAT32)** partition (internal or external) **if you do not already have a bootloader disk**. Call the partition `KRYPTONITE`.
-1. Download **Kryptonite-RELEASE** from the [Releases](https://github.com/mayankk2308/kryptonite/releases). If you want to emit logs for testing, download the **DEBUG** version.
-1. Unzip and copy the `EFI` folder to your created disk. Then edit the **config.plist** file and add the required **boot-args** you need. Check the [System](https://github.com/mayankk2308/kryptonite#system) section for more information.
+1. Download **Kryptonite-RELEASE** from [Releases](https://github.com/mayankk2308/kryptonite/releases). If you want to emit logs for testing, download the **DEBUG** version.
+1. Unzip and copy the `EFI` folder to your created disk. Then edit the **config.plist** file and add the required **boot-args**. You can find this in the `NVRAM` section. Check the [System](https://github.com/mayankk2308/kryptonite#system) section for more information.
 1. Bless the bootloader as follows:
    ```shell
    sudo bless --folder /Volumes/KRYPTONITE/EFI/BOOT --label Kryptonite
