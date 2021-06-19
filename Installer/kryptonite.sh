@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # kryptonite.sh
 # Version: 1.0.0
