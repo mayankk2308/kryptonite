@@ -99,8 +99,9 @@ To manually edit configurations, use [ProperTree](https://github.com/corpnewt/Pr
 #### Automatically Booting macOS via Kryptonite
 By default, when booting via **Kryptonite**, you will get a boot picker that times out after **10 seconds**. However, if you only have a single macOS installation and always want to boot directly into it without having to see the bootloader or wait for timeout:
 1. In your **config.plist**, set `Timeout` in the `Misc > Boot` section to `0`.
-1. When booting, press and hold `OPTION` key to bring up the default Apple bootpicker.
-1. Navigate to the `Kryptonite` boot disk and press `CTRL + ENTER` to make it the default boot volume from now on.
+1. Also set `ShowPicker` in `Misc > Boot` section to `False` (or `0`). 
+3. When booting, press and hold `OPTION` key to bring up the default Apple bootpicker.
+4. Navigate to the `Kryptonite` boot disk and press `CTRL + ENTER` to make it the default boot volume from now on.
    
 Your system should now boot via `Kryptonite` every time and not show the bootloader.
 
