@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # plists.sh
 # Alter and handle plist files.
@@ -15,7 +15,7 @@ plists_get() {
   local key="${1}"
   local pfile="${2}"
   
-  plists_getval="$("${pb}" -c "Print ${key}" 2>/dev/null)"
+  plists_getval="$("${pb}" -c "Print ${key}" "${pfile}" 2>/dev/null)"
 }
 
 # Add value for key in plist if not present.

@@ -1,9 +1,11 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # ui.sh
 # Common user interaction elements in shell.
 
 source "tools.sh"
+
+ui_menu_selected="-1"
 
 # Confirm action before proceeding.
 ui_confirm() {
@@ -25,35 +27,29 @@ ui_menu_action() {
   local input="${1}" && shift
   local actions=("${@}")
   
-  printf "\033[2K\r"
-  
-  if [[ "${input}" =~ ^[0-9]+$ ]] && 
-  [ "${input}" -gt 0 ] && 
-  [ "${input}" -le "${#actions[@]}" ]; then
-    eval "${actions[(($input - 1))]}"
-    return $?
-  fi
-  
-  printfn "Invalid choice."
-  return 1
+  eval "${actions[${input}]}"
 }
 
-# Select item from menu.
+# Select item from menu and return index.
 ui_menu_select() {
   local prompt="${1}" && shift
-  local caller="${1}" && shift
-  local actions=("${@}") && shift
+  local items=("${@}") && shift
   local input=""
   
   local rn1=""
-  (( ${#actions[@]} < 10 )) && rn1="-n1"
+  (( ${#items[@]} < 10 )) && rn1="-n1"
   
-  read -r "${rn1?}" -p "${b}${prompt}${n} [1-${#actions[@]}]: " input
-  ui_menu_action "${input}" "${actions[@]}"
-  if ui_confirm "Back to menu?"; then
-    eval "${caller}"
-    return 0
+  read -r "${rn1?}" -p "${b}${prompt}${n} [1-${#items[@]}]: " input
+  printf "\033[2K\r"
+  
+  if [[ ! "${input}" =~ ^[0-9]+$ ]] || 
+  [ "${input}" -lt 1 ] || 
+  [ "${input}" -gt "${#items[@]}" ]; then
+    ui_menu_selected="-1"
+    return
   fi
+  
+  ui_menu_selected=$(( input - 1 ))
 }
 
 # Show a menu for item selection.
