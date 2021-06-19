@@ -62,6 +62,7 @@ The steps are as follows:
 ### Post-Install
 1. The kernel extensions are automatically disabled on untested/beta versions of macOS. To enable them, follow [these instructions](https://github.com/mayankk2308/kryptonite#beta-versions-of-macos).
 2. If you want to boot directly into macOS without requiring to select the boot disk on every startup, follow [these steps](https://github.com/mayankk2308/kryptonite#automatically-booting-macos-via-kryptonite).
+3. If you tried using the **DEBUG** versions of the kexts and you have a much older slower mac, it may be possible that the system is not patched in time and may not work as expected. In that case, it is good to try the **RELEASE** version which should be faster.
 
 ## Uninstallation
 Uninstalling **Kryptonite** is very straightforward:
