@@ -6,6 +6,7 @@
 source "opencore.sh" 
 source "resources.sh"
 source "requirements.sh"
+source "nvram.sh"
 
 version="1.0.0"
 
