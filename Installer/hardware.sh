@@ -8,6 +8,7 @@ source "tools.sh"
 hardware_tbver=""
 hardware_isdesktop=1
 hardware_discretegpu="None"
+hardware_dgpuvendor="None"
 
 # Retrieve thunderbolt NHI type for system.
 hardware_get_tbver() {
@@ -34,8 +35,7 @@ hardware_get_discretegpu() {
   local ioreg
   ioreg="$(ioreg -n GFX0@0)"
   
-  local vendor
-  vendor="$(printfn "${ioreg}" | grep \"vendor-id\" | cut -d "=" -f2 | sed 's/ <//' | sed 's/>//' | cut -c1-4 | sed -E 's/^(.{2})(.{2}).*$/\2\1/')"
+  hardware_dgpuvendor="$(printfn "${ioreg}" | grep \"vendor-id\" | cut -d "=" -f2 | sed 's/ <//' | sed 's/>//' | cut -c1-4 | sed -E 's/^(.{2})(.{2}).*$/\2\1/')"
   
   local id
   id="$(printfn "${ioreg}" | grep \"device-id\" | cut -d "=" -f2 | sed 's/ <//' | sed 's/>//' | cut -c1-4 | sed -E 's/^(.{2})(.{2}).*$/\2\1/')"

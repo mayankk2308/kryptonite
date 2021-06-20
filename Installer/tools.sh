@@ -21,6 +21,12 @@ printfc() {
   printfn "${@}"
 }
 
+# Exit normally with message.
+exit_msg() {
+  printfn "${@}"
+  exit 0
+}
+
 # Exit with error message.
 exit_err() {
   printfn "${@}"
