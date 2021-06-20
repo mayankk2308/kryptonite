@@ -52,7 +52,7 @@ check_dependencies() {
   local dependencies=("${@}")
   for i in "${dependencies[@]}"; do
     check_dependency_exists "${i}"
-    exit_if_failed "Dependency ${b}${i}${n} not found. Exiting."
+    exit_if_failed "Dependency ${b}${i}${n} not found."
   done
 }
 
