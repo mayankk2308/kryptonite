@@ -129,3 +129,18 @@ disks_show() {
   
   disks_format
 }
+
+# Bless the bootloader directory with given label.
+disks_bless() {
+  local label="${1}"
+  
+  printfn "${b}Blessing bootloader...${n}"
+  
+  exit_if_val_empty "${label}" "No label provided for bless."
+  [ ! -e "${disks_bootloader_maindir}" ] && exit_err "Could not find bootloader."
+  
+  bless --folder "${disks_bootloader_maindir}/EFI/BOOT" --label "${label}"
+  exit_if_failed "Failed to bless bootloader."
+  
+  printfn "Disk blessed."
+}

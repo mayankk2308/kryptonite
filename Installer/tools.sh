@@ -32,6 +32,7 @@ exit_if_failed() {
   if [ $? != 0 ]; then
     exit_err "${@}"
   fi
+  return 0
 }
 
 # Exit if provided value is empty.
@@ -39,6 +40,7 @@ exit_if_val_empty() {
   local value="${1}"
   local message="${2}"
   [ -z "${value}" ] && exit_err "${message}"
+  return 0
 }
 
 # Check if a particular dependency exists.
