@@ -40,7 +40,9 @@ requirements_get_macos_version() {
 
 # Request information on existing OpenCore configuration.
 requirements_request_oc_existing() {
-  ui_confirm "${b}Already using OpenCore${n}?" && requirements_oc_existing=1
+  printfn "If you are using ${b}OpenCore${n} for any other purposes, press ${b}Y${n}."
+  printfn "Otherwise choose ${b}N${n}, even if you already have a Kryptonite-created bootloader.\n"
+  ui_confirm "${b}Are you using OpenCore Legacy Patcher${n}?" && requirements_oc_existing=1
 }
 
 # Request information on location of existing OpenCore configuration.
@@ -76,6 +78,8 @@ requirements_request_oc_debug() {
 
 # Request information on eGPU being used.
 requirements_request_nvgpu() {
+  printfn "${b}RTX GPUs${n} not supported. ${b}9/10 series${n} only supported on ${b}macOS High Sierra${n}."
+  printfn "${b}GTX 6/7 series${n} may work with limited support on the latest versions of macOS.\n"
   ui_confirm "Are you using an ${b}NVIDIA eGPU${n}?" && requirements_nvgpu=1
 }
 
@@ -100,10 +104,10 @@ requirements_summarize() {
   printfn "${b}Is Desktop Mac${n}              ${state[${hardware_isdesktop}]}"
   printfn "${b}Discrete GPU${n}                ${hardware_discretegpu}"
   printfn "${b}Disable Discrete GPU${n}        ${state[${requirements_disabledgpu}]}"
-  printfn "${b}Existing OpenCore Config${n}    ${state[${requirements_oc_existing}]}"
-  printfn "${b}Existing OpenCore Volume${n}    ${requirements_oc_existing_vol}"
+  printfn "${b}OpenCore Legacy Patcher${n}     ${state[${requirements_oc_existing}]}"
+  printfn "${b}OCLP Volume${n}                 ${requirements_oc_existing_vol}"
   printfn "${b}NVIDIA eGPU${n}                 ${state[${requirements_nvgpu}]}"
-  printfn "${b}Debug Mode${n}                  ${state[${requirements_oc_debug}]}"
+  printfn "${b}DEBUG Mode${n}                  ${state[${requirements_oc_debug}]}"
   printfn
   
   ! ui_confirm "${b}Proceed${n}?" && exit_msg "Stopping."

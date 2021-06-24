@@ -22,7 +22,7 @@ disks_get() {
   diskutil list -plist > "${dplist}"
   
   plists_get ":WholeDisks" "${dplist}"
-  exit_if_failed "Failed to retrieve whole disks. Exiting."
+  exit_if_failed "Failed to retrieve whole disks."
   local disk_count
   disk_count="$(printfn "${plists_getval}" | grep -ic disk)"
   
@@ -31,7 +31,7 @@ disks_get() {
     local base_key=":AllDisksAndPartitions:${i}:Partitions"
     
     plists_get ":AllDisksAndPartitions:${i}:Content" "${dplist}"
-    exit_if_failed "Failed to retrieve partition content. Exiting."
+    exit_if_failed "Failed to retrieve partition content."
     local content="${plists_getval}"
     
     if [ "${content}" = "Apple_HFSX" ]; then
@@ -40,7 +40,7 @@ disks_get() {
     fi
     
     plists_get "${base_key}" "${dplist}"
-    exit_if_failed "Failed to retrieve partitions. Exiting."
+    exit_if_failed "Failed to retrieve partitions."
     local pcount
     pcount="$(printfn "${plists_getval}" | 
     sed -e 1d -e '$d' | 
@@ -51,7 +51,7 @@ disks_get() {
     for (( j = pstart; j < pcount; j++ )); do
       local pcontent
       plists_get "${base_key}:${j}:Content" "${dplist}"
-      exit_if_failed "Failed to retrieve partition content. Exiting."
+      exit_if_failed "Failed to retrieve partition content."
       pcontent="${plists_getval}"
       
       { [ "${pcontent}" = "EFI" ] || 
@@ -60,11 +60,11 @@ disks_get() {
       [ "${pcontent}" = "Apple_Boot" ]; } && continue
       
       plists_get "${base_key}:${j}:VolumeName" "${dplist}"
-      exit_if_failed "Failed to retrieve partition volume name. Exiting."
+      exit_if_failed "Failed to retrieve partition volume name."
       local pname="${plists_getval}"
       
       plists_get "${base_key}:${j}:DeviceIdentifier" "${dplist}"
-      exit_if_failed "Failed to retrieve partition volume identifier. Exiting."
+      exit_if_failed "Failed to retrieve partition volume identifier."
       local pid="${plists_getval}"
       
       disks_primary_names+=("${pname} (${b}${pid}${n})")
@@ -76,12 +76,12 @@ disks_get() {
 # Format selected disk to MS-DOS FAT32 volume.
 disks_format() {
   printfn "${b}Selected Disk${n}: ${disks_primary_names[${disks_selection}]}\n"
-  ! ui_confirm "Format disk?" && exit_err "Aborting format. Exiting."
+  ! ui_confirm "Format disk?" && exit_err "Aborting format."
   
   local target_disk="${disks_primary_ids[${disks_selection}]}"
   printfn "${b}Formatting disk (${target_disk})...${n}"
   diskutil eraseVolume FAT32 KRYPTONITE "${target_disk}" 1>/dev/null
-  exit_if_failed "Failed to erase volume. Exiting."
+  exit_if_failed "Failed to erase volume."
   
   disks_bootloader_maindir="$(diskutil info "${target_disk}" | 
   grep -i "mount point" |
@@ -89,7 +89,7 @@ disks_format() {
   awk '{$1=$1};1')"
   
   if [ ! -e "${disks_bootloader_maindir}" ]; then
-    exit_err "Failed to find formatted volume root. Exiting."
+    exit_err "Failed to find formatted volume root."
   fi
   
   printfn "Disk ready."
@@ -100,7 +100,7 @@ disks_show() {
   disks_get
   local disk_count=${#disks_primary_ids[@]}
   
-  [ "${disk_count}" -lt 1 ] && exit_err "No valid disks found. Exiting."
+  [ "${disk_count}" -lt 1 ] && exit_err "No valid disks found."
   
   disk_count=$(( disk_count + 2 ))
   disks_primary_names+=("Refresh" "Quit")

@@ -6,6 +6,7 @@
 source "tools.sh"
 
 resources_oc_efi_dir=""
+resources_gfxutil=""
 
 # Retrieve resources from Github.
 resources_retrieve() {
@@ -38,6 +39,39 @@ resources_retrieve() {
   resources_oc_efi_dir="${dest}/EFI"
   
   [ ! -e "${resources_oc_efi_dir}" ] && exit_err "Failed to retrieve resources."
+  
+  printfn "Download complete."
+}
+
+# Retrieve gfxutil.
+resources_get_gfxutil() {
+  printfn "${b}Retrieving gfxutil...${n}"
+  
+  local dest="${1}"
+  dest="${dest:=$(pwd)}"
+  
+  local data
+  data="$(curl -qLs "https://api.github.com/repos/acidanthera/gfxutil/releases/latest")"
+  exit_if_val_empty "${data}" "Unable to retrieve resource metadata."
+  
+  local dwld_url
+  dwld_url="$(printfn "${data}" | grep '"browser_download_url":' | 
+  grep "RELEASE" | sed -E 's/.*"([^"]+)".*/\1/' 2>/dev/null)"
+  exit_if_val_empty "${dwld_url}" "Unable to retrieve download URL."
+  
+  local object="${dest}/gfxutil.zip"
+  
+  curl -qLs -o "${object}" "${dwld_url}"
+  exit_if_failed "Failed to download resources."
+  
+  unzip -q -d "${dest}" -o "${object}"
+  exit_if_failed "Failed to extract resources."
+  
+  rm -rf "${dest}/__MACOSX" "${object}" 2>/dev/null
+  
+  resources_gfxutil="${dest}/gfxutil"
+  
+  [ ! -e "${resources_gfxutil}" ] && exit_err "Failed to retrieve gfxutil."
   
   printfn "Download complete."
 }

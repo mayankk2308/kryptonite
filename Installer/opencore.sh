@@ -53,7 +53,6 @@ opencore_add_kry_injections() {
   done
   
   if [ "${lilu_index}" != -1 ]; then
-    printfn "${b}Enabling Lilu...${n}"
     plists_set "${base_key}:${lilu_index}:Enabled" "true" "${pfile}"
   else
     local vals=("Any" "Lilu.kext" "Contents/MacOS/Lilu" 
@@ -64,7 +63,6 @@ opencore_add_kry_injections() {
   fi
   
   if [ "${kry_index}" != -1 ]; then
-    printfn "${b}Enabling Kryptonite...${n}"
     plists_set "${base_key}:${kry_index}:Enabled" "true" "${pfile}"
   else
     local vals=("Any" "Kryptonite.kext" "Contents/MacOS/Kryptonite" 
@@ -101,6 +99,7 @@ opencore_set_bootargs() {
       local trimmed_arg="${arg%%=*}"
       
       if [[ "${new_arg}" == "${trimmed_arg}"* ]]; then
+        printfn "Boot-arg already exists: ${b}${trimmed_arg}${n}, Skipping..."
         match=1
         break
       fi
@@ -109,7 +108,10 @@ opencore_set_bootargs() {
     [ "${match}" = 0 ] && args_to_set+=("${new_arg}")
   done
   
-  plists_set "${bootargs_key}" "$(printfn "${args_to_set[@]}" | xargs)" "${pfile}"
+  local finalargs="$(printfn "${args_to_set[@]}" | xargs)"
+  plists_set "${bootargs_key}" "${finalargs}" "${pfile}"
+  
+  printfn "Final boot-args: ${b}${finalargs}${n}"
   printfn "Boot-args configured."
 }
 
