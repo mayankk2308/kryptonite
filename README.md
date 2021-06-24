@@ -48,16 +48,18 @@ The steps are as follows:
    ```shell
    purge-wrangler -u
    ```
-   You should also enable SIP and make sure your system can successfully boot. On macOS Big Sur or later, I recommend reinstalling macOS to re-seal your boot volume.
-1. Go to **Disk Utility** and [create](https://osxdaily.com/2020/06/29/how-create-new-partition-mac/) a new **MS-DOS (FAT32)** partition (internal or external) **if you do not already have a bootloader disk**. Call the partition `KRYPTONITE`.
-1. Download **Kryptonite-RELEASE** from [Releases](https://github.com/mayankk2308/kryptonite/releases). If you want to emit logs for testing, download the **DEBUG** version.
-1. Unzip and copy the `EFI` folder to your created disk. Then edit the **config.plist** file and add the required **boot-args**. You can find this in the `NVRAM` section. Check the [System](https://github.com/mayankk2308/kryptonite#system) section for more information.
-1. Bless the bootloader as follows:
+1. If you want to re-enable SIP and FileVault (ART), please reinstall macOS on top of your existing install before proceeding.
+1. Go to **Disk Utility** and [create](https://osxdaily.com/2020/06/29/how-create-new-partition-mac/) a new **MS-DOS (FAT32)** partition (internal or external) **if you do not already have a bootloader disk**. If you are using **OpenCore** already, such as with **OpenCore Legacy Patcher** to run unsupported macOS versions, you can skip this step.
+1. Easy-install via:
    ```shell
-   sudo bless --folder /Volumes/KRYPTONITE/EFI/BOOT --label Kryptonite
+   curl -qLs $(curl -qLs "https://api.github.com/repos/mayankk2308/kryptonite/releases/latest" | grep '"browser_download_url":' | grep Installer | sed -E 's/.*"([^"]+)".*/\1/') > Installer.zip; ditto -x -k Installer.zip .; cd Installer; chmod +x installer.sh; ./installer.sh; cd ../; rm -rf Installer*
    ```
+   Make sure to select the boot disk you created in the previous step or use your existing bootloader disk.
 1. When booting the system, press and hold **OPTION** key, then select the **Kryptonite** boot disk.
 1. This will launch another boot menu where you can select your macOS boot drive. Booting from here will patch the system in memory.
+
+### Manual Installs
+You can directly download the **Kryptonite** OpenCore configurations from the Releases section and place the extracted `EFI` folder onto a **MS-DOS (FAT32)** volume. If you already have a configuration to work with, all you really need to do is move **Kryptonite.kext** (and **Lilu** if you don't already have it) to your bootloader's `Kext` folder, and update `config.plist` with the kext details in the `Kernel > Add` section. Finally, you need to supply the correct boota arguments to **Kryptonite**, which you can find [here](https://github.com/mayankk2308/kryptonite#system).
 
 ### Post-Install
 1. The kernel extensions are automatically disabled on untested/beta versions of macOS. To enable them, follow [these instructions](https://github.com/mayankk2308/kryptonite#beta-versions-of-macos).

@@ -25,10 +25,14 @@ nvram_mux() {
 
 # Set mux to integrated GPU.
 nvram_muxigpu() {
+  printfn "${b}Muxing to iGPU...${n}"
   nvram_mux "%01%00%00%00"
+  printfn "Mux set."
 }
 
 # Set mux to discrete GPU.
 nvram_muxdgpu() {
+  printfn "${b}Muxing to dGPU...${n}"
   nvram_mux "%00%00%00%00"
+  printfn "Mux set."
 }

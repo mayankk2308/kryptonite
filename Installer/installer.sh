@@ -4,7 +4,7 @@
 # Initiates Kryptonite setup and configuration.
 
 source "disks.sh"
-source "opencore.sh" 
+source "opencore.sh"
 source "resources.sh"
 source "requirements.sh"
 source "nvram.sh"
@@ -25,9 +25,9 @@ start_prompt() {
 # Fetch Kryptonite resources.
 fetch_resources() {
   local filter="RELEASE"
-  
+
   [ "${requirements_oc_debug}" = 1 ] && filter="DEBUG"
-  
+
   resources_retrieve "${filter}" "${support_dir}"
 }
 
@@ -43,38 +43,32 @@ conclude_setup() {
 set_bootargs() {
   local gpu=("AMD" "NVDA")
   local config="${1}"
-  
+
   local bootargs=("-lilubeta" "-krybeta" "krygpu=${gpu[${requirements_nvgpu}]}" "krytbtv=${hardware_tbver}")
-  
+
   if [ "${requirements_oc_debug}" = 1 ]; then
     bootargs+=("-liludbg" "-krydbg" "liludump=60")
   fi
-  
+
   opencore_set_bootargs "${config}" "${bootargs[@]}"
 }
 
 # Disable discrete GPU if requested.
 disable_dgpu() {
+  local pfile="${1}"
+  
   if [ "${requirements_disabledgpu}" = 0 ]; then
     printfn "Not disabling discrete GPU if present, as configured."
     return 0
   fi
-  
-  resources_get_gfxutil "${support_dir}"
-  
-  local pcidevice="$("${resources_gfxutil}" -f GFX0 | sed 's/.*=//')"
-  pcidevice="${pcidevice##*( )}"
-  pcidevice="${pcidevice%%*( )}"
-  exit_if_val_empty "${pcidevice}" "Unable to locate GPU EFI device path."
-  
-  opencore_disable_gpudevice "${requirements_oc_existing_config}" "${pcidevice}"
-}
 
-# Common setup protocols.
-common_setup() {
-  disable_dgpu
-  printfn
-  conclude_setup
+  resources_get_gfxutil "${support_dir}"
+
+  local pcidevice="$("${resources_gfxutil}" -f GFX0 | sed 's/.*=//' | sed -e 's/^[ \t]*//')"
+  exit_if_val_empty "${pcidevice}" "Unable to locate GPU EFI device path."
+
+  opencore_disable_gpudevice "${pfile}" "${pcidevice}"
+  nvram_muxigpu
 }
 
 # Modify existing OpenCore configuration.
@@ -87,7 +81,9 @@ prep_existing_oc() {
   printfn
   set_bootargs "${requirements_oc_existing_config}"
   printfn
-  common_setup
+  disable_dgpu "${requirements_oc_existing_config}"
+  printfn
+  conclude_setup
 }
 
 # Install OpenCore minimal configuration for Kryptonite.
@@ -102,12 +98,14 @@ prep_fresh_oc() {
   printfn
   set_bootargs "${disks_bootloader_maindir}/EFI/OC/config.plist"
   printfn
-  common_setup
+  disable_dgpu "${disks_bootloader_maindir}/EFI/OC/config.plist"
+  printfn
+  conclude_setup
 }
 
 begin_prep() {
   mkdir -p "${support_dir}"
-  
+
   if [ "${requirements_oc_existing}" = 1 ]; then
     prep_existing_oc
   else
