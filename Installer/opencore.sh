@@ -5,8 +5,8 @@
 
 source "plists.sh"
 
-kext_fields=("Arch" "BundlePath" "ExecutablePath" "PlistPath" "Enabled")
-kext_field_types=("string" "string" "string" "string" "bool")
+kext_fields=("Comment" "MaxKernel" "MinKernel" "Arch" "BundlePath" "ExecutablePath" "PlistPath" "Enabled")
+kext_field_types=("string" "string" "string" "string" "string" "string" "string" "bool")
 bootargs_key=":NVRAM:Add:7C436110-AB2A-4BBB-A880-FE41995C9F82:boot-args"
 
 opencore_existing_bootargs=()
@@ -55,7 +55,7 @@ opencore_add_kry_injections() {
   if [ "${lilu_index}" != -1 ]; then
     plists_set "${base_key}:${lilu_index}:Enabled" "true" "${pfile}"
   else
-    local vals=("Any" "Lilu.kext" "Contents/MacOS/Lilu" 
+    local vals=("Kext/Process Patcher" "" "" "Any" "Lilu.kext" "Contents/MacOS/Lilu" 
     "Contents/Info.plist" "true")
     
     opencore_inject_kext "${pfile}" "${base_key}:${cindex}" "${vals[@]}"
@@ -65,7 +65,7 @@ opencore_add_kry_injections() {
   if [ "${kry_index}" != -1 ]; then
     plists_set "${base_key}:${kry_index}:Enabled" "true" "${pfile}"
   else
-    local vals=("Any" "Kryptonite.kext" "Contents/MacOS/Kryptonite" 
+    local vals=("eGFX Patches" "" "" "Any" "Kryptonite.kext" "Contents/MacOS/Kryptonite" 
     "Contents/Info.plist" "true")
     
     opencore_inject_kext "${pfile}" "${base_key}:${cindex}" "${vals[@]}"
