@@ -80,10 +80,14 @@ disks_format() {
   
   local target_disk="${disks_primary_ids[${disks_selection}]}"
   printfn "${b}Formatting disk (${target_disk})...${n}"
-  diskutil eraseVolume FAT32 KRYPTONITE "${target_disk}" 1>/dev/null
+  
+  local diskerase_io="$(diskutil eraseVolume FAT32 KRYPTONITE "${target_disk}" 2>/dev/null)"
   exit_if_failed "Failed to erase volume."
   
-  disks_bootloader_maindir="$(diskutil info "${target_disk}" | 
+  local new_disk_id="${diskerase_io#*Finished erase on }"
+  new_disk_id="/dev/${new_disk_id% *}"
+  
+  disks_bootloader_maindir="$(diskutil info "${new_disk_id}" | 
   grep -i "mount point" |
   cut -d':' -f2 |
   awk '{$1=$1};1')"
@@ -100,8 +104,20 @@ disks_show() {
   disks_get
   local disk_count=${#disks_primary_ids[@]}
   
-  [ "${disk_count}" -lt 1 ] && exit_err "No valid disks found."
+  printfn "Make sure you have a ${u}FAT32${n}, ${u}HFS+${n}, or ${u}ExFAT${n} volume available."
+  printfn "APFS volumes are not supported. ${b}The selected volume will"
+  printfn "be formatted for use with Kryptonite${n}.\n"
   
+  if [ "${disk_count}" -lt 1 ]; then
+    printf "No valid disks found. "
+     ui_confirm "Refresh disks?"
+     if [ $? = 0 ]; then
+       disks_show
+       return
+     fi
+     exit 1   
+   fi
+     
   disk_count=$(( disk_count + 2 ))
   disks_primary_names+=("Refresh" "Quit")
   

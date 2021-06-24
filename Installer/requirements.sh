@@ -40,9 +40,9 @@ requirements_get_macos_version() {
 
 # Request information on existing OpenCore configuration.
 requirements_request_oc_existing() {
-  printfn "If you are using ${b}OpenCore${n} for any other purposes, press ${b}Y${n}."
-  printfn "Otherwise choose ${b}N${n}, even if you already have a Kryptonite-created bootloader.\n"
-  ui_confirm "${b}Are you using OpenCore Legacy Patcher${n}?" && requirements_oc_existing=1
+  printfn "If you are using ${b}OpenCore${n} for any other purposes (such as OCLP), press ${b}Y${n}."
+  printfn "Otherwise press ${b}N${n}, even if you already have a Kryptonite-created bootloader.\n"
+  ui_confirm "${b}Are you using already using OpenCore${n}?" && requirements_oc_existing=1
 }
 
 # Request information on location of existing OpenCore configuration.

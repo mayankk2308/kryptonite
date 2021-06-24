@@ -40,9 +40,9 @@ hardware_get_discretegpu() {
   local id
   id="$(printfn "${ioreg}" | grep \"device-id\" | cut -d "=" -f2 | sed 's/ <//' | sed 's/>//' | cut -c1-4 | sed -E 's/^(.{2})(.{2}).*$/\2\1/')"
   
-  [ -z "${vendor}" ] && return 0
+  [ -z "${hardware_dgpuvendor}" ] && return 0
   
-  hardware_discretegpu="$(curl -s "http://pci-ids.ucw.cz/read/PC/${vendor}/${id}" |
+  hardware_discretegpu="$(curl -s "http://pci-ids.ucw.cz/read/PC/${hardware_dgpuvendor}/${id}" |
    grep -i "itemname" | 
    sed -E "s/.*Name\: (.*)$/\1/" |
    tail -1 | 
@@ -50,7 +50,7 @@ hardware_get_discretegpu() {
    cut -d ']' -f1)"
    
    if [ -z "${hardware_discretegpu}" ]; then
-     hardware_discretegpu="${id}:${vendor}"
+     hardware_discretegpu="${id}:${hardware_dgpuvendor}"
    fi
 }
 

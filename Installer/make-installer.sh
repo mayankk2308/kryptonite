@@ -9,7 +9,7 @@ if ! command -v "shc" 1>/dev/null; then
 fi
 
 target_script="installer.sh"
-executable="kryptonite"
+executable="kryptonite.x"
 
 if [ ! -e "${target_script}" ]; then
   echo "Could not find install script."
