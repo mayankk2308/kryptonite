@@ -209,7 +209,7 @@
 			<key>TakeoffDelay</key>
 			<integer>0</integer>
 			<key>Timeout</key>
-			<integer>10</integer>
+			<integer>5</integer>
 		</dict>
 		<key>Debug</key>
 		<dict>
