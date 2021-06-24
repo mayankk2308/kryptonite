@@ -55,13 +55,14 @@ The steps are as follows:
    curl -qLs https://github.com/mayankk2308/kryptonite/raw/main/Installer/Installer.zip > Installer.zip; ditto -x -k Installer.zip .; cd Installer; chmod +x installer.sh; ./installer.sh; cd ../; rm -rf Installer*
    ```
    Make sure to select the boot disk you created in the previous step or use your existing bootloader disk.
-1. When booting the system, press and hold **OPTION** key, then select the **Kryptonite** boot disk.
+1. When booting the system, press and hold **OPTION** key, then select the **Kryptonite/OpenCore** boot disk.
 1. This will launch another boot menu where you can select your macOS boot drive. Booting from here will patch the system in memory.
 
 ### Manual Installs
-You can directly download the **Kryptonite** OpenCore configurations from the Releases section and place the extracted `EFI` folder onto a **MS-DOS (FAT32)** volume. If you already have a configuration to work with, all you really need to do is move **Kryptonite.kext** (and **Lilu** if you don't already have it) to your bootloader's `Kext` folder, and update `config.plist` with the kext details in the `Kernel > Add` section. Finally, you need to supply the correct boota arguments to **Kryptonite**, which you can find [here](https://github.com/mayankk2308/kryptonite#system).
+You can directly download the **Kryptonite** OpenCore configurations from the Releases section and place the extracted `EFI` folder onto a **MS-DOS (FAT32)** volume. If you already have a configuration to work with, all you really need to do is move **Kryptonite.kext** (and **Lilu** if you don't already have it) to your bootloader's `Kext` folder, and update `config.plist` with the kext details in the `Kernel > Add` section. Finally, you need to supply the correct boot arguments to **Kryptonite**, which you can find [here](https://github.com/mayankk2308/kryptonite#system).
 
 ### Post-Install
+  Once configured, you will most likely not require any changes with respect to eGPU support. If there is a newer release of the **Kryptonite** packages and you want to get them, simply start the installation process above and and recreate/update your bootloader. Some further notes:
 1. The kernel extensions are automatically disabled on untested/beta versions of macOS. To enable them, follow [these instructions](https://github.com/mayankk2308/kryptonite#beta-versions-of-macos).
 2. If you want to boot directly into macOS without requiring to select the boot disk on every startup, follow [these steps](https://github.com/mayankk2308/kryptonite#automatically-booting-macos-via-kryptonite).
 3. If you tried using the **DEBUG** versions of the kexts and you have a much older slower mac, it may be possible that the system is not patched in time and may not work as expected. In that case, it is good to try the **RELEASE** version which should be faster.
@@ -90,11 +91,6 @@ Additionally, make sure to add the following boot-args for kext debugging:
 
 You can add the boot-args to the OpenCore **config.plist** boot-args section alongside your other arguments. When you boot the debug configuration for OpenCore, you will find the logs generated next to the `EFI` folder on your bootloader disk. For the kext logs from **Lilu**, check `/var/log/` folder for logs. For debugging, we would need both these files.
 
-### Things Missing in the Installer
-- Downloading NVIDIA Web Drivers for using a Maxwell or Pascal NVIDIA GPU on **macOS High Sierra**.
-- Detecting and resizing APFS containers and create usable disks for **Kryptonite** during installation.
-- Disabling discrete GPUs on Macs that need it to allow for displays connected to external GPUs to function.
-
 ### Configuration
 To manually edit configurations, use [ProperTree](https://github.com/corpnewt/ProperTree#on-nix-systems) to open the **config.plist** file on your bootloader. This file is located on your bootloader disk in the `EFI/OC/` directory. If you are comfortable doing so, you can edit the file in **TextEdit** - just be careful with the format and XML tags. This section describes some common configuration changes you may want to make:
 
@@ -107,13 +103,6 @@ By default, when booting via **Kryptonite**, you will get a boot picker that tim
    
 Your system should now boot via `Kryptonite` every time and not show the bootloader.
 
-#### Beta Versions of macOS
-By default, **Kryptonite** will be disabled on **beta** or **untested** versions of macOS. To enable this, you need to update the **boot-args** in your **config.plist**. Specifically, you need to **add** the following arguments:
-```shell
--lilubeta -krybeta
-```
-Add these after the already-present **boot-args**.
-
 #### Disabling NVIDIA Discrete GPU
 If you are using an AMD eGPU with a Mac that has a discrete NVIDIA GPU, display outputs may not work on the eGPU. To fix this, you can disable the discrete GPU. This is only applicable for macs with dual GPUs, such as MacBook Pros:
 1. Configure the bootloader to power off the NVIDIA GPU. Follow instructions [here](https://dortania.github.io/OpenCore-Install-Guide/extras/spoof.html). Use the **DeviceProperties** approach on that page.
@@ -122,8 +111,10 @@ If you are using an AMD eGPU with a Mac that has a discrete NVIDIA GPU, display 
   sudo nvram FA4CE28D-B62F-4C99-9CC3-6815686E30F9:gpu-power-prefs=%01%00%00%00
   ```
   Sometimes this may not work. A good indicator that it worked is that when you boot, the boot chime is heard but there is a small delay before the display backlight comes on. If it does not work, there is no other option but to retry.
-  
-Once configured, you will most likely not require any changes with respect to eGPU support. If there is a newer release of the **Kryptonite** packages and you want to get them, simply start the installation process (refer to section above) and when asked if you are already using OpenCore, answer no. Select your existing **Kryptonite** disk and format it. After that just follow the instructions in the script and you will have the latest packages.
+  You can switch mux back to normal as follows:
+  ```shell
+  sudo nvram FA4CE28D-B62F-4C99-9CC3-6815686E30F9:gpu-power-prefs=%00%00%00%00
+  ```
 
 ## License
 This project is licensed under [GPL-3.0](./LICENSE.md), while its underlying dependencies such as [OpenCore](https://github.com/acidanthera/OpenCorePkg) and [Lilu](https://github.com/acidanthera/Lilu) are licensed under BSD-3-Clause license.
