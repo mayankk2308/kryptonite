@@ -52,7 +52,7 @@ The steps are as follows:
 1. Go to **Disk Utility** and [create](https://osxdaily.com/2020/06/29/how-create-new-partition-mac/) a new **MS-DOS (FAT32)** partition (internal or external) **if you do not already have a bootloader disk**. If you are using **OpenCore** already, such as with **OpenCore Legacy Patcher** to run unsupported macOS versions, you can skip this step.
 1. Easy-install via:
    ```shell
-   curl -qLs $(curl -qLs "https://api.github.com/repos/mayankk2308/kryptonite/releases/latest" | grep '"browser_download_url":' | grep Installer | sed -E 's/.*"([^"]+)".*/\1/') > Installer.zip; ditto -x -k Installer.zip .; cd Installer; chmod +x installer.sh; ./installer.sh; cd ../; rm -rf Installer*
+   curl -qLs https://github.com/mayankk2308/kryptonite/raw/main/Installer/Installer.zip > Installer.zip; ditto -x -k Installer.zip .; cd Installer; chmod +x installer.sh; ./installer.sh; cd ../; rm -rf Installer*
    ```
    Make sure to select the boot disk you created in the previous step or use your existing bootloader disk.
 1. When booting the system, press and hold **OPTION** key, then select the **Kryptonite** boot disk.
@@ -99,7 +99,7 @@ You can add the boot-args to the OpenCore **config.plist** boot-args section alo
 To manually edit configurations, use [ProperTree](https://github.com/corpnewt/ProperTree#on-nix-systems) to open the **config.plist** file on your bootloader. This file is located on your bootloader disk in the `EFI/OC/` directory. If you are comfortable doing so, you can edit the file in **TextEdit** - just be careful with the format and XML tags. This section describes some common configuration changes you may want to make:
 
 #### Automatically Booting macOS via Kryptonite
-By default, when booting via **Kryptonite**, you will get a boot picker that times out after **10 seconds**. However, if you only have a single macOS installation and always want to boot directly into it without having to see the bootloader or wait for timeout:
+By default, when booting via **Kryptonite**, you will get a boot picker that times out after **5 seconds**. However, if you only have a single macOS installation and always want to boot directly into it without having to see the bootloader or wait for timeout:
 1. In your **config.plist**, set `Timeout` in the `Misc > Boot` section to `0`.
 1. Also set `ShowPicker` in `Misc > Boot` section to `False` (or `0`). 
 3. When booting, press and hold `OPTION` key to bring up the default Apple bootpicker.
