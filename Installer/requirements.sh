@@ -20,19 +20,19 @@ requirements_get_macos_version() {
   local macos_ver
   macos_ver="$(sw_vers -productVersion)"
   requirements_macos_version="${macos_ver}"
-  
+
   local macos_primary_ver
   macos_primary_ver="$(printfn "${macos_ver}" | cut -d '.' -f1)"
   local macos_major_ver
   macos_major_ver="$(printfn "${macos_ver}" | cut -d '.' -f2)"
-  
+
   local macos_minor_ver
   macos_minor_ver="$(printfn "${macos_ver}" | cut -d '.' -f3)"
   [ -z "${macos_minor_ver}" ] && macos_minor_ver=0
-  
+
   [ "${macos_primary_ver}" -gt 10 ] && return
-  
-  if [ "${macos_major_ver}" -lt 13 ] || 
+
+  if [ "${macos_major_ver}" -lt 13 ] ||
   { [ "${macos_major_ver}" -eq 13 ] && [ "${macos_minor_ver}" -lt 4 ]; }; then
     exit_err "${b}macOS 10.13.4${n} or newer required.\n"
   fi
@@ -42,20 +42,20 @@ requirements_get_macos_version() {
 requirements_request_oc_existing() {
   printfn "If you are using ${b}OpenCore${n} for any other purposes (such as OCLP), press ${b}Y${n}."
   printfn "Otherwise press ${b}N${n}, even if you already have a Kryptonite-created bootloader.\n"
-  ui_confirm "${b}Are you using already using OpenCore${n}?" && requirements_oc_existing=1
+  ui_confirm "${b}Are you already using OpenCore${n}?" && requirements_oc_existing=1
 }
 
 # Request information on location of existing OpenCore configuration.
 requirements_request_oc_existing_vol() {
   [ "${requirements_oc_existing}" != 1 ] && return
-  
+
   printfn "${b}Drag and drop${n} your OpenCore disk here. Then press ${b}RETURN${n}."
   read -r -p "${b}Disk Path${n}: " requirements_oc_existing_vol
   printfn
-  
+
   requirements_oc_existing_config="${requirements_oc_existing_vol}/EFI/OC/config.plist"
-  
-  if { [ ! -e "${requirements_oc_existing_vol}" ] || 
+
+  if { [ ! -e "${requirements_oc_existing_vol}" ] ||
   [ ! -e "${requirements_oc_existing_config}" ]; }; then
     printfn "Unable to locate existing bootloader volume. Try again.\n"
     requirements_oc_existing=0
@@ -64,7 +64,7 @@ requirements_request_oc_existing_vol() {
     requirements_request_oc_existing_vol
     return $?
   fi
-  
+
   printfn "Existing OpenCore configuration located.\n"
 }
 
@@ -72,7 +72,7 @@ requirements_request_oc_existing_vol() {
 requirements_request_oc_debug() {
   printfn "If you want to ${b}emit logs for testing${n}, please use"
   printfn "${b}DEBUG${n} resources. Otherwise, press ${b}N${n} to get ${b}RELEASE${n} resources.\n"
-  
+
   ui_confirm "${b}Use DEBUG resources${n}?" && requirements_oc_debug=1
 }
 
@@ -91,8 +91,8 @@ requirements_request_disabledgpu() {
   printfn "to use external displays with eGPUs. If you choose to disable it, eGPU"
   printfn "displays will work, but you will be unable to adjust internal display"
   printfn "${u}brightness${n} and your mac will be unable to wake from ${u}sleep${n}.\n"
-  
-  ui_confirm "${b}Disable Discrete GPU${n}?" && requirements_disabledgpu=1  
+
+  ui_confirm "${b}Disable Discrete GPU${n}?" && requirements_disabledgpu=1
 }
 
 # Summarize requirements and request confirmation before proceeding.
@@ -109,9 +109,9 @@ requirements_summarize() {
   printfn "${b}NVIDIA eGPU${n}                 ${state[${requirements_nvgpu}]}"
   printfn "${b}DEBUG Mode${n}                  ${state[${requirements_oc_debug}]}"
   printfn
-  
+
   ! ui_confirm "${b}Proceed${n}?" && exit_msg "Stopping."
-  
+
   return 0
 }
 
