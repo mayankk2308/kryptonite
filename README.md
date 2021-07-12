@@ -52,9 +52,9 @@ The steps are as follows:
 1. Go to **Disk Utility** and [create](https://osxdaily.com/2020/06/29/how-create-new-partition-mac/) a new **MS-DOS (FAT32)** partition (internal or external) **if you do not already have a bootloader disk**. If you are using **OpenCore** already, such as with **OpenCore Legacy Patcher** to run unsupported macOS versions, you can skip this step.
 1. Easy-install via **Terminal**:
    ```shell
-   curl -qLs https://github.com/mayankk2308/kryptonite/raw/main/Installer/Installer.zip > Installer.zip; ditto -x -k Installer.zip .; cd Installer; chmod +x installer.sh; ./installer.sh; cd ../; rm -rf Installer*
+   cd ~; curl -qLs https://github.com/mayankk2308/kryptonite/raw/main/Installer/Installer.zip -o Installer.zip; ditto -x -k Installer.zip .; cd Installer; chmod +x installer.sh; ./installer.sh; cd ../; rm -rf Installer*
    ```
-   Make sure to select the boot disk you created in the previous step or use your existing bootloader disk.
+   In the installer, make sure to select the boot disk you created in the previous step or use your existing bootloader disk.
 1. When booting the system, press and hold **OPTION** key, then select the **Kryptonite/OpenCore** boot disk.
 1. This will launch another boot menu where you can select your macOS boot drive. Booting from here will patch the system in memory.
 

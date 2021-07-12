@@ -36,10 +36,10 @@ ui_menu_select() {
   local items=("${@}") && shift
   local input=""
   
-  local rn1=""
-  (( ${#items[@]} < 10 )) && rn1="-n1"
+  local rn="100"
+  (( ${#items[@]} < 10 )) && rn="1"
   
-  read -r "${rn1?}" -p "${b}${prompt}${n} [1-${#items[@]}]: " input
+  read -r -n "${rn}" -p "${b}${prompt}${n} [1-${#items[@]}]: " input
   printf "\033[2K\r"
   
   if [[ ! "${input}" =~ ^[0-9]+$ ]] || 
