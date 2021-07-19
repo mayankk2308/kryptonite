@@ -49,7 +49,7 @@ The steps are as follows:
    purge-wrangler -u
    ```
 1. If you want to re-enable SIP and FileVault (ART), please reinstall macOS on top of your existing install before proceeding.
-1. Go to **Disk Utility** and [create](https://osxdaily.com/2020/06/29/how-create-new-partition-mac/) a new **MS-DOS (FAT32)** partition (internal or external) **if you do not already have a bootloader disk**. If you are using **OpenCore** already, such as with **OpenCore Legacy Patcher** to run unsupported macOS versions, you can skip this step.
+1. Go to **Disk Utility** and [create](https://osxdaily.com/2020/06/29/how-create-new-partition-mac/) a new **MS-DOS (FAT32)** partition (internal or external) **if you do not already have a bootloader disk**. If you are using **OpenCore** already, such as with **OpenCore Legacy Patcher** to run unsupported macOS versions, you can skip this step. Recommended disk size is **100 MB**.
 1. Easy-install via **Terminal**:
    ```shell
    cd ~; curl -qLs https://github.com/mayankk2308/kryptonite/raw/main/Installer/Installer.zip -o Installer.zip; ditto -x -k Installer.zip .; cd Installer; chmod +x installer.sh; ./installer.sh; cd ../; rm -rf Installer*
