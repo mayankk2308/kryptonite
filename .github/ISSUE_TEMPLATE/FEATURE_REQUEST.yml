@@ -1,0 +1,27 @@
+name: Feature Request
+description: For requesting new features in Kryptonite.
+title: "[FR]"
+labels: "[]"
+assignees:
+  - mayankk2308
+body:
+  - type: textarea
+    id: feature-description
+    attributes:
+      label: What feature would you like?
+      description: Explain your feature.
+      placeholder: Explain here...
+  - type: textarea
+    id: why-feature
+    attributes:
+      label: Why should this feature be added to Kryptonite?
+      description: Think if Kryptonite is the right place to add this feature.
+      placeholder: Explain here...
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: Confirmation
+      description: Please ensure you have provided all details above.
+      options:
+        - label: I have provided explained my feature in detail.
+          required: true

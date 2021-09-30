@@ -1,0 +1,67 @@
+name: Bug Report
+description: For reporting problems with Kryptonite.
+title: "[BUG]"
+labels: "[]"
+assignees:
+  - mayankk2308
+body:
+  - type: input
+    id: what-mac
+    attributes:
+      label: What Mac are you using?
+      description: Specify Mac make/model for easier debugging.
+      placeholder: ex. MacBookPro11,3
+    validations:
+      required: true
+  - type: dropdown
+    id: what-mac-version
+    attributes:
+      label: What version of macOS are you using?
+      description: Specify macOS version for easier debugging.
+      options:
+        - '10.13.x'
+        - '10.14.x'
+        - '10.15'
+        - '10.15.x'
+        - '11.x'
+        - '12.x'
+        - 'Newer'
+    validations:
+      required: true
+  - type: dropdown
+    id: using-oclp
+    attributes:
+      label: Are you using OpenCore Legacy Patcher?
+      description: There can be other causes of your problem if you use [OCLP](https://github.com/dortania/OpenCore-Legacy-Patcher).
+      options:
+        - 'Yes'
+        - 'No'
+    validations:
+      required: true
+  - type: textarea
+    id: problem-description
+    attributes:
+      label: What is your issue?
+      description: Also explain how you expected the system to behave.
+      placeholder: Explain here...
+  - type: textarea
+    id: log-uploads
+    attributes:
+      label: Upload Kryptonite Logs
+      description: See https://github.com/mayankk2308/kryptonite/wiki/Debugging on how to do so.
+      placeholder: Click here, then drag and drop your files in this area.
+      value: Click here, then drag and drop your files in this area.
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: Confirmation
+      description: Please ensure you have provided all details above.
+      options:
+        - label: I have uploaded the OpenCore **config.plist**.
+          required: true
+        - label: I have uploaded all OpenCore Logs.
+          required: true
+        - label: I have uploaded Lilu logs.
+          required: true
+        - label: I have explained my issue in detail.
+          required: true
