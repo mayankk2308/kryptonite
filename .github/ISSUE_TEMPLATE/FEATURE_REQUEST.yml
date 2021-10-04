@@ -23,5 +23,5 @@ body:
       label: Confirmation
       description: Please ensure you have provided all details above.
       options:
-        - label: I have provided explained my feature in detail.
+        - label: I have explained my feature in detail.
           required: true
